@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+   
+<struts>
+	
+	<package name="default-package" extends="struts-default">
+		<default-action-ref name="index"></default-action-ref>
+		
+		<action name="user*" class="userAction" method="user{1}">
+			<result name="login_succeeded">/index.html</result>
+			<result name="login_failed">/loginFailed.html</result>
+			<result name="resgister_succeeded">/index.html</result>
+			<result name="username_exists">/RegisterFailed.html</result>
+		</action>
+		
+		<action name="floor*" class="floorRoomAction" method="floor{1}">
+		</action>
+		<action name="room*" class="floorRoomAction" method="room{1}">
+		</action>
+		<action name="artefact*" class="artefactAction" method="artefact{1}">
+			<result name="add_succeeded">/floor_itsuwari.html</result>
+		</action>
+		
+	</package>
+	
+</struts>    

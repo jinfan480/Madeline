@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Add an artefact</title>
+</head>
+<script type="text/javascript">
+var room;
+function LoadRoom(){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var roomHTML;
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			room = eval(json);
+			for(var i=0; i<room.length; i++){
+				roomHTML += "<option value=\""+room[i].roomnum+"\">"+room[i].roomnum+"</option>";
+			}
+			document.getElementById("room").innerHTML = roomHTML;
+		}
+	};
+	xmlhttp.open("POST", "roomShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send(null);
+}
+
+function add(){
+	if(document.getElementById("title").value==null){
+		alert("An artefact must have a title");
+		return;
+	}
+	document.artefactAdd.submit();
+}
+</script>
+<body onLoad="LoadRoom()">
+	<form name="artefactAdd" action="artefactAdd" method="post">
+		<label>Artefact Title:</label> <input id="title" type="text" />
+		<br />
+		<label>Content:</label>
+		<br />
+		<textarea id="content" rows="10" cols="30"></textarea>
+		<br />
+		<label>Image:</label>
+		<br />
+		<label>Audio:</label>
+		<br />
+		<label>Video:</label>
+		<br /> 
+		<label>Old or New</label>
+		<input id="isOld" name="isOld" type="radio" value="1">Old
+		<input id="isOld" name="isOld" type="radio" value="0">New
+		<br />
+		<label>Room Id:</label>
+		<select id="room">
+		</select>
+		<br />
+		<input type="button" onclick="add()" value="Add Artefact"/>
+	</form>
+</body>
+</html>

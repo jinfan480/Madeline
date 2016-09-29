@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-9-22 15:31:37 by Hibernate Tools 5.1.0.Beta1 -->
+<hibernate-mapping>
+    <class name="com.madeline.entity.Floor" table="floor" catalog="madeline" optimistic-lock="version">
+        <id name="floorid" type="java.lang.Integer">
+            <column name="FLOORID" />
+            <generator class="identity" />
+        </id>
+        <property name="floornum" type="java.lang.Integer">
+            <column name="FLOORNUM" unique="true" />
+        </property>
+        <property name="floordescript" type="string">
+            <column name="FLOORDESCRIPT" length="65535" />
+        </property>
+    </class>
+</hibernate-mapping>

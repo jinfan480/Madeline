@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Room</title>
+</head>
+
+<script type="text/javascript">
+var room;
+function show(tag, i){
+ 	var light=document.getElementById(tag);
+ 	light.style.display='block';
+ 	if(i!=-1){
+ 		document.getElementById("modi_id").value = room[i].roomid;
+ 		document.getElementById("modi_num").value = room[i].roomnum;
+ 	 	document.getElementById("modi_name").value = room[i].roomname;
+ 		document.getElementById("modi_info").value = room[i].roominfo;
+ 		document.getElementById("delete_id").value = room[i].roomid;
+ 	}
+}
+function hide(tag){
+	var light=document.getElementById(tag);
+ 	light.style.display='none';
+}
+
+function add(){
+	var roomNum = document.getElementById("roomnum").value;
+	var roomName = document.getElementById("roomname").value;
+	var roomInfo = document.getElementById("roominfo").value;
+	var level = document.getElementById("level").value;
+	if(isNaN(roomNum)){
+		alert("Room number must be an integer");
+		return;
+	}else{
+		if(roomNum.indexOf(level)!=0){
+			alert("Room number must begin with: "+ level);
+			return;
+		}
+	}
+	if(roomName==""||roomName==null){
+		alert("There must be a room name");
+		return;
+	}
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			alert(xmlhttp.responseText);
+			searchRoom();
+		}
+	}
+	xmlhttp.open("POST", "roomAdd", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("roomNum="+roomNum+"&roomName="+roomName+"&roomInfo="+roomInfo+"&level="+level);
+	hide('add');
+}
+
+function modify(){
+	var roomId = document.getElementById("modi_id").value;
+	var roomNum = document.getElementById("modi_num").value;
+	var roomName = document.getElementById("modi_name").value;
+	var roomInfo = document.getElementById("modi_info").value;
+	var level = document.getElementById("level").value;
+	if(isNaN(roomNum)){
+// 		alert("Room number must be an integer");
+		return;
+	}else{
+// 		alert(roomNum.indexOf(level));
+		if(roomNum.indexOf(level)!=0){
+			alert("Room number must begin with: "+ level);
+			return;
+		}
+	}
+	if(roomName==""||roomName==null){
+		alert("There must be a room name");
+		return;
+	}
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			alert(xmlhttp.responseText);
+			searchRoom();
+		}
+	}
+	xmlhttp.open("POST", "roomModify", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("roomId="+roomId+"&roomNum="+roomNum+"&roomName="+roomName+"&roomInfo="+roomInfo+"&level="+level);
+	hide('modify');
+}
+
+function Delete(){
+	var roomId = document.getElementById("delete_id").value;
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			alert(xmlhttp.responseText);
+			searchRoom();
+		}
+	}
+	xmlhttp.open("POST", "roomDelete", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("roomId="+roomId);
+	hide('delete');
+}
+
+function LoadLevel(floorId){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var Level;
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			floor = eval(json);
+			for(var i=0; i<floor.length; i++){
+				Level += "<option value=\""+floor[i].floornum+"\">"+floor[i].floornum+"</option>";
+			}
+			document.getElementById("level").innerHTML = Level;
+			if(floorId != -1){
+				document.getElementById("level").value = floorId;
+			}
+			searchRoom();
+		}
+	};
+	xmlhttp.open("POST", "floorShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send(null);
+}
+
+function searchRoom(){
+	var level = document.getElementById("level").value;
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var RoomTable = "<tr><td>RoomID(invisible)</td><td>Room</td><td>FloorID</td><td>RoomName</td><td>RoomInfo</td><td>Modify</td><td>Delete</td></tr>";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			room = eval(json);
+			for(var i=0; i<room.length; i++){
+				RoomTable += "<tr><td>"+room[i].roomid+"</td><td>"+room[i].roomnum+"</td><td>"+room[i].floorid+"</td><td>"+room[i].roomname+"</td><td>"+room[i].roominfo+"</td>";
+				RoomTable += "<td><a href=\"javascript:void(0)\"onclick=\"show('modify',"+i+")\">Modify</a></td>";
+				RoomTable += "<td><a href=\"javascript:void(0)\"onclick=\"show('delete',"+i+")\">Delete</a></td></tr>";
+			}
+			RoomTable += "<tr><td align=\"right\" colspan=\"7\"><a href=\"javascript:void(0)\"  onclick=\"show('add',-1)\">Add a Level</a></td></tr>";
+			document.getElementById("room").innerHTML = RoomTable;
+		}
+	};
+	xmlhttp.open("POST", "roomShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("level="+level);
+}
+
+function getParam(){
+	var url = document.location.href;
+    var floorId = -1;
+    if (url.indexOf("=")>0)
+    {
+    	floorId = url.substring(url.indexOf("=")+1,url.length);
+    }
+    LoadLevel(floorId);
+}
+
+</script>
+
+<body onLoad="getParam()">
+	<label>Level:</label>
+	<select id="level" onchange="searchRoom()">
+	</select>
+	<table id="room" border="solid">
+	</table>
+	<div id="add" style="display: none">
+		<div>
+			<label>Room Number:</label>
+			<input id="roomnum" type="text"/>
+			<br/>
+			<label>Room Name:</label>
+			<input id="roomname" type="text"/>
+			<br/>
+			<label>Room Info:</label>
+			<input id="roominfo" type="text"/>
+			<a href="javascript:void(0)" onclick="add()"> Add</a>
+			<a href="javascript:void(0)" onclick="hide('add')"> Close</a>
+		</div>
+	</div>
+	<div id="modify" style="display: none">
+		<div>
+			<label>Room Number:</label>
+			<input id="modi_num" type="text"/>
+			<br/>
+			<label>Room Name:</label>
+			<input id="modi_name" type="text"/>
+			<br/>
+			<label>Room Info:</label>
+			<input id="modi_info" type="text"/>
+			<input id="modi_id" type="hidden">
+			<a href="javascript:void(0)" onclick="modify()">Modify</a>
+			<a href="javascript:void(0)" onclick="hide('modify')"> Close</a>
+		</div>
+	</div>
+	<div id="delete" style="display: none">
+		<div>
+			<label>Are you sure to delete this room?</label>
+			<br/>
+			<input id="delete_id" type="hidden">
+			<a href="javascript:void(0)" onclick="Delete()">Delete</a>
+			<a href="javascript:void(0)" onclick="hide('delete')"> Cancel</a>
+		</div>
+	</div>
+</body>
+</html>

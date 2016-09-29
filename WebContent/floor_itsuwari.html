@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>admin dashborad</title>
+</head>
+
+<script type="text/javascript">
+var floor;
+
+function show(tag, i){
+ 	var light=document.getElementById(tag);
+ 	light.style.display='block';
+ 	if(i!=-1){
+ 		document.getElementById("modi_id").value = floor[i].floorid;
+ 	 	document.getElementById("modi_num").value = floor[i].floornum;
+ 		document.getElementById("modi_desp").value = floor[i].floordescript;
+ 		document.getElementById("delete_id").value = floor[i].floorid;
+ 	}
+}
+function hide(tag){
+	 var light=document.getElementById(tag);
+ 	light.style.display='none';
+}
+
+function add(){
+	var floorNum = document.getElementById("floornum").value;
+	var floorDescript = document.getElementById("floordescript").value;
+	if(isNaN(floorNum)){
+		alert("Level must be an integer");
+		return;
+	}
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			alert(xmlhttp.responseText);
+ 			search();
+		}
+	}
+	xmlhttp.open("POST", "floorAdd", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("floorNum="+floorNum+"&floorDescript="+floorDescript);
+	hide('add');
+}
+
+function modify(){
+	var floorId = document.getElementById("modi_id").value;
+	var floorNum = document.getElementById("modi_num").value;
+	var floorDescript = document.getElementById("modi_desp").value;
+	if(isNaN(floorNum)){
+		alert("Level must be an integer");
+		return;
+	}
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			alert(xmlhttp.responseText);
+			search();
+		}
+	}
+	xmlhttp.open("POST", "floorModify", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("floorId="+floorId+"&floorNum="+floorNum+"&floorDescript="+floorDescript);
+	hide('modify');
+}
+
+function Delete(){
+	var floorId = document.getElementById("delete_id").value;
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			alert(xmlhttp.responseText);
+			search();
+		}
+	}
+	xmlhttp.open("POST", "floorDelete", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("floorId="+floorId);
+	hide('delete');
+}
+
+function search(){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var floorTable = "<tr><td>floorID(invisible)</td><td>Floor</td><td>Floor Description</td><td>Modify</td><td>Delete</td></tr>";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			floor = eval(json);
+			for(var i=0; i<floor.length; i++){
+				floorTable += "<tr><td>"+floor[i].floorid+"</td><td><a href=room_itsuwari.html?id="+floor[i].floornum+">"+floor[i].floornum+"</a></td><td>"+floor[i].floordescript+"</td>";
+				floorTable += "<td><a href=\"javascript:void(0)\"onclick=\"show('modify',"+i+")\">Modify</a></td>";
+				floorTable += "<td><a href=\"javascript:void(0)\"onclick=\"show('delete',"+i+")\">Delete</a></td></tr>";
+			}
+			floorTable += "<tr><td align=\"right\" colspan=\"5\"><a href=\"javascript:void(0)\"  onclick=\"show('add',-1)\">Add a Level</a></td></tr>";
+			document.getElementById("floor").innerHTML = floorTable;
+		}
+	};
+	xmlhttp.open("POST", "floorShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send(null);
+}
+</script>
+
+
+<body onLoad="search()">
+
+	<table id="floor" border="solid">
+	
+	</table>
+	
+	<div id="add" style="display: none">
+		<div>
+			<label>Level:</label>
+			<input id="floornum" type="text"/>
+			<br/>
+			<label>Floor Description:</label>
+			<input id="floordescript" type="text"/>
+			<a href="javascript:void(0)" onclick="add()"> Add</a>
+			<a href="javascript:void(0)" onclick="hide('add')"> Close</a>
+		</div>
+	</div>
+	<div id="modify" style="display: none">
+		<div>
+			<label>Level:</label>
+			<input id="modi_num" type="text"/>
+			<br/>
+			<label>Floor Description:</label>
+			<input id="modi_desp" type="text"/>
+			<input id="modi_id" type="hidden">
+			<a href="javascript:void(0)" onclick="modify()">Modify</a>
+			<a href="javascript:void(0)" onclick="hide('modify')"> Close</a>
+		</div>
+	</div>
+	<div id="delete" style="display: none">
+		<div>
+			<label>Are you sure to delete this level?</label>
+			<br/>
+			<input id="delete_id" type="hidden">
+			<a href="javascript:void(0)" onclick="Delete()">Delete</a>
+			<a href="javascript:void(0)" onclick="hide('delete')"> Cancel</a>
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Add an Artefact</title>
+</head>
+<script type="text/javascript">
+function upload(){
+	var file = document.getElementById("file").value;
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			alert(xmlhttp.responseText);
+			searchRoom();
+		}
+	}
+	xmlhttp.open("POST", "artefactUpload", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("file="+file);
+}
+</script>
+<body>
+	<p align="center">Choose a file:</p>
+	<form method="post" action="artefactUpload" enctype="multipart/form-data">
+		<table border="0" align="center">
+			<tr>
+				<td>File upload</td>
+				<td><input name="file" type="file" size="20"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" name="submit" value="submit"> <input type="reset" name="reset" value="reset"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

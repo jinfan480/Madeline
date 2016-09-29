@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-9-22 15:31:37 by Hibernate Tools 5.1.0.Beta1 -->
+<hibernate-mapping>
+    <class name="com.madeline.entity.User" table="user" catalog="madeline" optimistic-lock="version">
+        <id name="userid" type="java.lang.Integer">
+            <column name="USERID" />
+            <generator class="identity" />
+        </id>
+        <property name="username" type="string">
+            <column name="USERNAME" unique="true" />
+        </property>
+        <property name="userpassword" type="string">
+            <column name="USERPASSWORD" />
+        </property>
+        <property name="roleid" type="java.lang.Integer">
+            <column name="ROLEID" />
+        </property>
+        <property name="rolename" type="string">
+            <column name="ROLENAME" />
+        </property>
+        <property name="email" type="string">
+            <column name="EMAIL" />
+        </property>
+        <property name="phone" type="java.lang.Long">
+            <column name="PHONE" />
+        </property>
+        <property name="portrait" type="string">
+            <column name="PORTRAIT" />
+        </property>
+        <property name="description" type="string">
+            <column name="DESCRIPTION" />
+        </property>
+        <property name="issubscribed" type="java.lang.Boolean">
+            <column name="ISSUBSCRIBED" />
+        </property>
+    </class>
+</hibernate-mapping>
