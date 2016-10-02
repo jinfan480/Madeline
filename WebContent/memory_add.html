@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>add Memory</title>
+</head>
+<script type="text/javascript">
+var room;
+function LoadRoom(){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var roomHTML;
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			room = eval(json);
+			for(var i=0; i<room.length; i++){
+				roomHTML += "<option value=\""+room[i].roomnum+"\">"+room[i].roomnum+"</option>";
+			}
+			document.getElementById("room").innerHTML = roomHTML;
+		}
+	};
+	xmlhttp.open("POST", "roomShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send(null);
+}
+
+
+
+</script>
+
+
+
+<body onLoad="LoadRoom()">
+<form name="memoryAdd" action="memoryAdd" method="post">
+	<label>Memory Title:</label> <input id="title" type="text" />
+	<br />
+	<label>Content:</label>
+	<br />
+	<textarea id="content" rows="10" cols="30"></textarea>
+	<br />
+	<label>Image:</label>
+	<br />
+	<label>Audio:</label>
+	<br />
+	<label>Video:</label>
+	<br /> 
+	<label>Old or New</label>
+	<input id="isOld" name="isOld" type="radio" value="1">Old
+	<input id="isOld" name="isOld" type="radio" value="0">New
+	<br />
+	<label>Room Id:</label>
+	<select id="room">
+	</select>
+	<br />
+	<input type="button" onclick="add()" value="Add Memory"/>
+</form>
+</body>
+
+
+
+</html>

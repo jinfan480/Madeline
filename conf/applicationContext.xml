@@ -71,6 +71,27 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
+	
+	
+	<bean id="memoryAction" class="com.madeline.action.MemoryAction">
+		<property name="memoryService">
+			<ref bean="memoryService" />
+		</property>
+	</bean>
+
+	<bean id="memoryService" class="com.madeline.service.MemoryService">
+		<property name="memoryDao">
+			<ref bean="memoryDao" />
+		</property>
+	</bean>
+
+	<bean id="memoryDao" class="com.madeline.daoImpl.MemoryDaoImpl">
+	<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="user" value="${jdbc.user}"></property>
