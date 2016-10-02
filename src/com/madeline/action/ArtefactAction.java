@@ -1,64 +1,22 @@
 package com.madeline.action;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.madeline.entity.Artefact;
 import com.madeline.service.ArtefactService;
 
-public class ArtefactAction {
+public class ArtefactAction implements ServletRequestAware {
 
 	private Artefact artefact;
 	private ArtefactService artefactService;
 
 	private HttpServletRequest request;
-
-	 private File file;
-	    
-	    //提交过来的file的名字
-	    private String fileFileName;
-	    
-	    //提交过来的file的MIME类型
-	    private String fileContentType;
-
-	    public File getFile()
-	    {
-	        return file;
-	    }
-
-	    public void setFile(File file)
-	    {
-	        this.file = file;
-	    }
-
-	    public String getFileFileName()
-	    {
-	        return fileFileName;
-	    }
-
-	    public void setFileFileName(String fileFileName)
-	    {
-	        this.fileFileName = fileFileName;
-	    }
-
-	    public String getFileContentType()
-	    {
-	        return fileContentType;
-	    }
-
-	    public void setFileContentType(String fileContentType)
-	    {
-	        this.fileContentType = fileContentType;
-	    }
 	
 	public Artefact getArtefact() {
 		return artefact;
@@ -76,6 +34,11 @@ public class ArtefactAction {
 		this.artefactService = artefactService;
 	}
 
+	@Override
+	public void setServletRequest(HttpServletRequest arg0) {
+		this.request = arg0;
+	}
+
 	public String artefactAdd() {
 		artefact.setIsdeleted(false);
 		return artefactService.addArtefact(artefact);
@@ -88,25 +51,27 @@ public class ArtefactAction {
 	public String artefactModify() {
 		return artefactService.modifyArtefact(artefact);
 	}
-
-	public String artefactUpload() throws IOException {
-//		String root = ServletActionContext.getServletContext().getRealPath("/upload");
-		String root = "D:/";
-		InputStream is = new FileInputStream(file);
-		OutputStream os = new FileOutputStream(new File(root, fileFileName));
-		System.out.println("fileFileName: " + fileFileName);
-		// 因为file是存放在临时文件夹的文件，我们可以将其文件名和文件路径打印出来，看和之前的fileFileName是否相同
-		System.out.println("file: " + file.getName());
-		System.out.println("file: " + file.getPath());
-
-		byte[] buffer = new byte[500];
-		int length = 0;
-
-		while (-1 != (length = is.read(buffer, 0, buffer.length))) {
-			os.write(buffer);
+	
+	public void artefactSearch() {
+		ServletActionContext.getResponse().setContentType("text/json;charset=UTF-8");
+		ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+		PrintWriter out = null;
+		String json = new String();
+		String room = request.getParameter("room");
+		String isOld = request.getParameter("isOld");
+		String page = request.getParameter("page");
+		String size = request.getParameter("size");
+		try {
+			out = ServletActionContext.getResponse().getWriter();
+			json = artefactService.artefactSearch(room , isOld, page, size);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		os.close();
-		is.close();
-		return "success";
+		out.print(json);
+		out.flush();
+	}
+	
+	public void artefactUpload() throws IOException {
+
 	}
 }

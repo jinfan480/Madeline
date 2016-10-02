@@ -20,7 +20,7 @@
 		<action name="room*" class="floorRoomAction" method="room{1}">
 		</action>
 		<action name="artefact*" class="artefactAction" method="artefact{1}">
-			<result name="add_succeeded">/floor_itsuwari.html</result>
+			<result name="succeeded">/index.html</result>
 		</action>
 		
 	</package>

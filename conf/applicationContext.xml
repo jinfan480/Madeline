@@ -9,7 +9,7 @@
 
 	<context:property-placeholder location="classpath:db.properties" />
 
-	<bean name="userAction" class="com.madeline.action.UserAction">
+	<bean id="userAction" class="com.madeline.action.UserAction">
 		<property name="userService">
 			<ref bean="userService" />
 		</property>

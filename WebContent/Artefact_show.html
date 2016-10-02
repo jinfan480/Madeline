@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Artefacts</title>
+</head>
+<script type="text/javascript">
+var room;
+var art;
+function LoadRoom(roomId){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var Room ="<option value=\"All\">All</option>";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			room = eval(json);
+			for(var i=0; i<room.length; i++){
+				Room += "<option value=\""+room[i].roomnum+"\">"+room[i].roomnum+"</option>";
+			}
+			document.getElementById("room").innerHTML = Room;
+			if(roomId != -1){
+				document.getElementById("room").value = roomId;
+			}
+			searchArt(1);
+		}
+	};
+	xmlhttp.open("POST", "roomShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send(null);
+}
+function searchArt(page){
+	var room = document.getElementById("room").value;
+	var isOld = document.getElementById("isOld").value;
+	var size = document.getElementById("pageSize").value;
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var Artefact = "<tr><td>ArtefactID(invisible)</td><td>Title</td><td>RoomId</td><td>Content</td><td>Old/New</td><td>Modify</td><td>Delete</td></tr>";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			var pages = json.split("||")[0];
+			art = eval(json.split("||")[1]);
+			for(var i=0; i<art.length; i++){
+				var old;
+				if(art[i].isold==true)
+					old = "Old";
+				else
+					old = "New";
+				Artefact += "<tr><td>"+art[i].artefactid+"</td><td>"+art[i].title+"</td><td>"+art[i].roomid+"</td><td>"+art[i].content+"</td><td>"+old+"</td>";
+				Artefact += "<td><a href=\"javascript:void(0)\"onclick=\"show('modify',"+i+")\">Modify</a></td>";
+				Artefact += "<td><a href=\"javascript:void(0)\"onclick=\"show('delete',"+i+")\">Delete</a></td></tr>";
+			}
+			if(pages!=1){
+				var next = parseInt(page) + 1;
+				var pre = parseInt(page) - 1;
+				if(page==1){
+					Artefact += "<tr><td align=\"middle\" colspan=\"7\">First Page | <a href=\"javascript:void(0)\"onclick=\"searchArt("+next+")\">Next Page</a></td></tr>"
+				}else if(page==pages){
+					Artefact += "<tr><td align=\"middle\" colspan=\"7\"><a href=\"javascript:void(0)\"onclick=\"searchArt("+pre+")\">Previous Page</a> | Final Page</td></tr>"
+				}else{
+					Artefact += "<tr><td align=\"middle\" colspan=\"7\"><a href=\"javascript:void(0)\"onclick=\"searchArt("+pre+")\">Previous Page</a> | <a href=\"javascript:void(0)\"onclick=\"searchArt("+next+")\">Next Page</a></td></tr>"
+				}
+			}
+			Artefact += "<tr><td align=\"right\" colspan=\"7\"><a href=\"javascript:void(0)\"  onclick=\"show('add',-1)\">Add an Artefact</a></td></tr>";
+			document.getElementById("artefact").innerHTML = Artefact;
+		}
+	};
+	xmlhttp.open("POST", "artefactSearch", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("room="+room+"&isOld="+isOld+"&page="+page+"&size="+size);
+}
+function getParam(){
+	var url = document.location.href;
+    var roomId = -1;
+    if (url.indexOf("=")>0)
+    {
+    	roomId = url.substring(url.indexOf("=")+1,url.length);
+    }
+    LoadRoom(roomId);
+}
+</script>
+<body onLoad="getParam()">
+	<select id="room">
+	</select>
+	<select id="isOld">
+		<option value="Both">Both</option>
+		<option value="New">New</option>
+		<option value="Old">Old</option>
+	</select>
+	<select id="pageSize">
+		<option value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>
+	</select>
+	<input type="button" value="search" onclick="searchArt(1)">
+	<table id="artefact" border="solid">
+	
+	</table>
+	<input type="hidden" id="page">
+</body>
+</html>

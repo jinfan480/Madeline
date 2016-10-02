@@ -31,33 +31,56 @@ function LoadRoom(){
 }
 
 function add(){
-	if(document.getElementById("title").value==null){
+	if(document.getElementById("title").value==""){
 		alert("An artefact must have a title");
 		return;
 	}
 	document.artefactAdd.submit();
 }
+
+function upload(){
+	var file = document.getElementById("image").file[0];
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			alert(xmlhttp.responseText);
+		}
+	}
+	xmlhttp.open("POST", "artefactUpload", true);
+// 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	var fd = new FormData();
+	fd.append("img",file);
+	xmlhttp.send(fd);
+}
 </script>
 <body onLoad="LoadRoom()">
 	<form name="artefactAdd" action="artefactAdd" method="post">
-		<label>Artefact Title:</label> <input id="title" type="text" />
+		<label>Artefact Title:</label> <input id="title" name="artefact.title" type="text" />
 		<br />
 		<label>Content:</label>
 		<br />
-		<textarea id="content" rows="10" cols="30"></textarea>
+		<textarea id="content" name="artefact.content" rows="10" cols="30"></textarea>
 		<br />
 		<label>Image:</label>
+		<input id="image" type="file" size="20">
+		<input type="button" name="upload" value="upload" onclick="upload()">
+		<input type="reset" name="reset" value="reset">
 		<br />
 		<label>Audio:</label>
 		<br />
 		<label>Video:</label>
 		<br /> 
 		<label>Old or New</label>
-		<input id="isOld" name="isOld" type="radio" value="1">Old
-		<input id="isOld" name="isOld" type="radio" value="0">New
+		<input id="isOld" name="artefact.isold" type="radio" value="1">Old
+		<input id="isOld" name="artefact.isold" type="radio" value="0">New
 		<br />
 		<label>Room Id:</label>
-		<select id="room">
+		<select id="room" name="artefact.roomid">
 		</select>
 		<br />
 		<input type="button" onclick="add()" value="Add Artefact"/>
