@@ -25,31 +25,33 @@ public class ArtefactService {
 			return "incomplete content";
 		}
 		if(artefactDao.addArtefact(artefact)){
-			return "succeeded";
+			return "add_succeeded";
 		}else{
-			return "failed";
+			return "add_failed";
 		}
 	}
 	
 	public String deleteArtefact(Artefact artefact){
-		if(artefact == null){
+		if(artefact == null || artefact.getArtefactid()==null){
 			return "artefact_null";
 		}
 		if(artefactDao.deleteArtefact(artefact)){
-			return "succeeded";
+			return "Artefact Deleted";
 		}else{
-			return "failed";
+			return "No such Artefact";
 		}
 	}
 	
 	public String modifyArtefact(Artefact artefact){
 		if(artefact == null){
 			return "artefact_null";
+		}else if(artefact.getTitle().isEmpty() || artefact.getRoomid()==null){
+			return "incomplete content";
 		}
 		if(artefactDao.modifyArtefact(artefact)){
-			return "succeeded";
+			return "modify_succeeded";
 		}else{
-			return "failed";
+			return "modify_failed";
 		}
 	}
 
@@ -71,6 +73,11 @@ public class ArtefactService {
 			s = 20;
 		}
 		String json = "" + artefactDao.artefactShow(room, old, p, s);
+		return json;
+	}
+
+	public String artefactSearch(String id) {
+		String json = "" + artefactDao.artefactShow(id);
 		return json;
 	}
 }

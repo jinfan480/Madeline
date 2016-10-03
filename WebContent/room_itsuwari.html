@@ -155,14 +155,15 @@ function searchRoom(){
 	}
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var RoomTable = "<tr><td>RoomID(invisible)</td><td>Room</td><td>FloorID</td><td>RoomName</td><td>RoomInfo</td><td>Modify</td><td>Delete</td></tr>";
+			var RoomTable = "<tr><td>RoomID(invisible)</td><td>Room</td><td>FloorID</td><td>RoomName</td><td>RoomInfo</td><td>Modify</td><td>Delete</td><td>Artefacts</td></tr>";
 			var json = xmlhttp.responseText;
 // 			alert(json);
 			room = eval(json);
 			for(var i=0; i<room.length; i++){
 				RoomTable += "<tr><td>"+room[i].roomid+"</td><td>"+room[i].roomnum+"</td><td>"+room[i].floorid+"</td><td>"+room[i].roomname+"</td><td>"+room[i].roominfo+"</td>";
 				RoomTable += "<td><a href=\"javascript:void(0)\"onclick=\"show('modify',"+i+")\">Modify</a></td>";
-				RoomTable += "<td><a href=\"javascript:void(0)\"onclick=\"show('delete',"+i+")\">Delete</a></td></tr>";
+				RoomTable += "<td><a href=\"javascript:void(0)\"onclick=\"show('delete',"+i+")\">Delete</a></td>";
+				RoomTable += "<td><a href=\"Artefact_show.html?id="+room[i].roomnum+"\">Artefacts</a></td></tr>";
 			}
 			RoomTable += "<tr><td align=\"right\" colspan=\"7\"><a href=\"javascript:void(0)\"  onclick=\"show('add',-1)\">Add a Level</a></td></tr>";
 			document.getElementById("room").innerHTML = RoomTable;

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Artefact Modify</title>
+</head>
+<script type="text/javascript">
+function LoadRoom(){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var roomHTML;
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			room = eval(json);
+			for(var i=0; i<room.length; i++){
+				roomHTML += "<option value=\""+room[i].roomnum+"\">"+room[i].roomnum+"</option>";
+			}
+			document.getElementById("roomId").innerHTML = roomHTML;
+		}
+	};
+	xmlhttp.open("POST", "roomShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send(null);
+}
+
+function viewArtefact(){
+	var url = document.location.href;
+    var artId = -1;
+    if (url.indexOf("=")>0)
+    {
+    	artId = url.substring(url.indexOf("=")+1,url.length);
+    }else{
+        alert("Unknown Artefact");
+        return;
+    }
+    var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var json = xmlhttp.responseText;
+			if(json==""||json==null)
+				alert("No such Artefact");
+			else{
+				json = "[" + json + "]";
+				var artefact = eval(json);
+				document.getElementById("id").value = artefact[0].artefactid;
+				document.getElementById("title").value = artefact[0].title;
+				document.getElementById("content").value = artefact[0].content;
+				if(artefact[0].isold==true)
+					document.getElementsByName("artefact.isold")[0].checked = true;
+				else
+					document.getElementsByName("artefact.isold")[1].checked = true;
+				LoadRoom();
+				var select = document.getElementById("roomId");
+				for(var i=0; i<select.options.length; i++){  
+				    if(select.options[i].innerHTML == artefact[0].roomid){  
+				        select.options[i].selected = true;  
+				        break;  
+				    }  
+				} 
+			}
+		}
+	};
+	xmlhttp.open("POST", "artefactView", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("artefactId="+artId);
+}
+
+function modify(){
+	if(document.getElementById("title").value==""){
+		alert("An artefact must have a title");
+		return;
+	}
+	document.artefactModify.submit();
+}
+</script>
+<body onLoad="viewArtefact()">
+	<form name="artefactModify" action="artefactModify" method="post">
+		<label>Artefact Title:</label>
+		<input id="title" name="artefact.title" type="text"/>
+		<br />
+		<label>Content:</label>
+		<br />
+		<textarea id="content" name="artefact.content" rows="10" cols="30"></textarea>
+		<br />
+		<label>Image:</label>
+		<br />
+		<label>Audio:</label>
+		<br />
+		<label>Video:</label>
+		<br /> 
+		<label>Old or New</label>
+		<input id="isOld" name="artefact.isold" type="radio" value="1">Old
+		<input id="isOld" name="artefact.isold" type="radio" value="0">New
+		<br />
+		<label>Room Id:</label>
+		<select id="roomId" name="artefact.roomid">
+		</select>
+		<input type="button" onclick="modify()" value="Modify Artefact"/>
+		<input id="id" name="artefact.artefactid" type="hidden">
+	</form>
+</body>
+</html>

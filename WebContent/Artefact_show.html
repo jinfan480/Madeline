@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -7,6 +7,17 @@
 <script type="text/javascript">
 var room;
 var art;
+function show(tag, i){
+ 	var light=document.getElementById(tag);
+ 	light.style.display='block';
+ 	if(i!=-1){
+ 		document.getElementById("delete_id").value = art[i].artefactid;
+ 	}
+}
+function hide(tag){
+	 var light=document.getElementById(tag);
+ 	light.style.display='none';
+}
 function LoadRoom(roomId){
 	var xmlhttp;
 	if (window.XMLHttpRequest) {
@@ -46,7 +57,7 @@ function searchArt(page){
 	}
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var Artefact = "<tr><td>ArtefactID(invisible)</td><td>Title</td><td>RoomId</td><td>Content</td><td>Old/New</td><td>Modify</td><td>Delete</td></tr>";
+			var Artefact = "<tr><td>ArtefactID(invisible)</td><td>Title</td><td>RoomId</td><td>Content</td><td>Old/New</td><td>Modify</td><td>Delete</td><td>Detail</td></tr>";
 			var json = xmlhttp.responseText;
 // 			alert(json);
 			var pages = json.split("||")[0];
@@ -58,21 +69,22 @@ function searchArt(page){
 				else
 					old = "New";
 				Artefact += "<tr><td>"+art[i].artefactid+"</td><td>"+art[i].title+"</td><td>"+art[i].roomid+"</td><td>"+art[i].content+"</td><td>"+old+"</td>";
-				Artefact += "<td><a href=\"javascript:void(0)\"onclick=\"show('modify',"+i+")\">Modify</a></td>";
-				Artefact += "<td><a href=\"javascript:void(0)\"onclick=\"show('delete',"+i+")\">Delete</a></td></tr>";
+				Artefact += "<td><a href=\"artefact_modify.html?id="+art[i].artefactid+"\">Modify</a></td>";
+				Artefact += "<td><a href=\"javascript:void(0)\"onclick=\"show('delete',"+i+")\">Delete</a></td>";
+				Artefact += "<td><a href=\"artefact_view.html?id="+art[i].artefactid+"\">Detail</a></td></tr>";
 			}
 			if(pages!=1){
 				var next = parseInt(page) + 1;
 				var pre = parseInt(page) - 1;
 				if(page==1){
-					Artefact += "<tr><td align=\"middle\" colspan=\"7\">First Page | <a href=\"javascript:void(0)\"onclick=\"searchArt("+next+")\">Next Page</a></td></tr>"
+					Artefact += "<tr><td align=\"middle\" colspan=\"8\">First Page | <a href=\"javascript:void(0)\"onclick=\"searchArt("+next+")\">Next Page</a></td></tr>"
 				}else if(page==pages){
-					Artefact += "<tr><td align=\"middle\" colspan=\"7\"><a href=\"javascript:void(0)\"onclick=\"searchArt("+pre+")\">Previous Page</a> | Final Page</td></tr>"
+					Artefact += "<tr><td align=\"middle\" colspan=\"8\"><a href=\"javascript:void(0)\"onclick=\"searchArt("+pre+")\">Previous Page</a> | Final Page</td></tr>"
 				}else{
-					Artefact += "<tr><td align=\"middle\" colspan=\"7\"><a href=\"javascript:void(0)\"onclick=\"searchArt("+pre+")\">Previous Page</a> | <a href=\"javascript:void(0)\"onclick=\"searchArt("+next+")\">Next Page</a></td></tr>"
+					Artefact += "<tr><td align=\"middle\" colspan=\"8\"><a href=\"javascript:void(0)\"onclick=\"searchArt("+pre+")\">Previous Page</a> | <a href=\"javascript:void(0)\"onclick=\"searchArt("+next+")\">Next Page</a></td></tr>"
 				}
 			}
-			Artefact += "<tr><td align=\"right\" colspan=\"7\"><a href=\"javascript:void(0)\"  onclick=\"show('add',-1)\">Add an Artefact</a></td></tr>";
+			Artefact += "<tr><td align=\"right\" colspan=\"8\"><a href=\"artefact_add.html\">Add an Artefact</a></td></tr>";
 			document.getElementById("artefact").innerHTML = Artefact;
 		}
 	};
@@ -80,6 +92,27 @@ function searchArt(page){
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("room="+room+"&isOld="+isOld+"&page="+page+"&size="+size);
 }
+
+function Delete(){
+	var artId = document.getElementById("delete_id").value;
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			alert(xmlhttp.responseText);
+			searchArt(1);
+		}
+	}
+	xmlhttp.open("POST", "artefactDelete", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("artefactId="+artId);
+	hide('delete');
+}
+
 function getParam(){
 	var url = document.location.href;
     var roomId = -1;
@@ -108,5 +141,14 @@ function getParam(){
 	
 	</table>
 	<input type="hidden" id="page">
+	<div id="delete" style="display: none">
+		<div>
+			<label>Are you sure to delete this artefact?</label>
+			<br/>
+			<input id="delete_id" type="hidden">
+			<a href="javascript:void(0)" onclick="Delete()">Delete</a>
+			<a href="javascript:void(0)" onclick="hide('delete')"> Cancel</a>
+		</div>
+	</div>
 </body>
 </html>

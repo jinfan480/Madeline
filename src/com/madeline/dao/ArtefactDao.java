@@ -7,4 +7,5 @@ public interface ArtefactDao {
 	public boolean deleteArtefact(Artefact artefact);
 	public boolean modifyArtefact(Artefact artefact);
 	public String artefactShow(String room, int isOld, int page, int size);
+	public String artefactShow(String id);
 }

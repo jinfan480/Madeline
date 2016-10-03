@@ -59,20 +59,9 @@ public class ArtefactDaoImpl implements ArtefactDao {
 		}catch(NoResultException ne){
 			return false;
 		}
-		artefact.setIsdeleted(true);
 		try{
+			artefact.setIsdeleted(true);
 			session.update(artefact);
-		// TODO
-		}catch(Exception e){
-			return false;
-		}
-		query = session.createQuery("from RelationRoomArtefact where artefactid='" + artefact.getArtefactid() + "'");
-		RelationRoomArtefact ra;
-		try{
-			ra = (RelationRoomArtefact) query.getSingleResult();
-			session.delete(ra);
-		}catch(NoResultException ne){
-			return false;
 		// TODO
 		}catch(Exception e){
 			return false;
@@ -83,19 +72,13 @@ public class ArtefactDaoImpl implements ArtefactDao {
 	@Override
 	public boolean modifyArtefact(Artefact artefact) {
 		Session session = sessionFactory.getCurrentSession();
-		Query<?> query = session.createQuery("from Artefact where artefactid='" + artefact.getArtefactid() + "'");
-		try{
-			query.getSingleResult();
-		}catch(NoResultException ne){
-			return false;
-		}
 		try{
 			session.update(artefact);
 		// TODO
 		}catch(Exception e){
 			return false;
 		}
-		query = session.createQuery("from RelationRoomArtefact where artefactid='" + artefact.getArtefactid() + "'");
+		Query<?> query = session.createQuery("from RelationRoomArtefact where artefactid='" + artefact.getArtefactid() + "'");
 		RelationRoomArtefact ra;
 		try{
 			ra = (RelationRoomArtefact) query.getSingleResult();
@@ -113,12 +96,12 @@ public class ArtefactDaoImpl implements ArtefactDao {
 	@Override
 	public String artefactShow(String room, int isOld, int page, int size) {
 		Session session = sessionFactory.getCurrentSession();
-		String HQL = "from Artefact ";
+		String HQL = "from Artefact where 1=1";
 		if(!room.equals("All"))
-			HQL += "where roomid=" + room;
+			HQL += " and roomid=" + room;
 		if(isOld!=-1)
-			HQL += " where isold=" + isOld;
-		HQL += " where isdeleted=0";
+			HQL += " and isold=" + isOld;
+		HQL += " and isdeleted=0";
 		Query<?> query = session.createQuery(HQL).setFirstResult((page-1)*size).setMaxResults(size);
 		List<Floor> result = new ArrayList<Floor>();
 		try{
@@ -131,5 +114,19 @@ public class ArtefactDaoImpl implements ArtefactDao {
 		query = session.createQuery(HQL);
 		long pages = (long)query.getSingleResult()/size + ((long)query.getSingleResult()%size==0?0:1);
 		return pages + "||" + gson.toJson(result);
+	}
+
+	@Override
+	public String artefactShow(String id) {
+		Session session = sessionFactory.getCurrentSession();
+		Query<?> query = session.createQuery("from Artefact where artefactid='" + id + "'");
+		Artefact artefact = null;
+		try{
+			artefact = (Artefact)query.getSingleResult();
+		}catch(NoResultException ne){
+			return null;
+		}
+		Gson gson = new Gson();
+		return gson.toJson(artefact);
 	}
 }

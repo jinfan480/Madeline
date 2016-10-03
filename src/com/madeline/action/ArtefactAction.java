@@ -44,11 +44,26 @@ public class ArtefactAction implements ServletRequestAware {
 		return artefactService.addArtefact(artefact);
 	}
 
-	public String artefactDelete() {
-		return artefactService.deleteArtefact(artefact);
+	public void artefactDelete() {
+		artefact = new Artefact();
+		ServletActionContext.getResponse().setContentType("text/json;charset=UTF-8");
+		ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+		PrintWriter out = null;
+		String message = new String();
+		try{
+			out = ServletActionContext.getResponse().getWriter();
+			artefact.setArtefactid(Integer.parseInt(request.getParameter("artefactId")));
+			message = artefactService.deleteArtefact(artefact);
+			
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.print(message);
+		out.flush();
 	}
 
 	public String artefactModify() {
+		artefact.setIsdeleted(false);
 		return artefactService.modifyArtefact(artefact);
 	}
 	
@@ -64,6 +79,22 @@ public class ArtefactAction implements ServletRequestAware {
 		try {
 			out = ServletActionContext.getResponse().getWriter();
 			json = artefactService.artefactSearch(room , isOld, page, size);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.print(json);
+		out.flush();
+	}
+	
+	public void artefactView() {
+		ServletActionContext.getResponse().setContentType("text/json;charset=UTF-8");
+		ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+		PrintWriter out = null;
+		String json = new String();
+		String id = request.getParameter("artefactId");
+		try {
+			out = ServletActionContext.getResponse().getWriter();
+			json = artefactService.artefactSearch(id);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

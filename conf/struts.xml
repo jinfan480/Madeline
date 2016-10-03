@@ -20,7 +20,8 @@
 		<action name="room*" class="floorRoomAction" method="room{1}">
 		</action>
 		<action name="artefact*" class="artefactAction" method="artefact{1}">
-			<result name="succeeded">/index.html</result>
+			<result name="add_succeeded">/Artefact_show.html</result>
+			<result name="modify_succeeded">/Artefact_show.html</result>
 		</action>
 		
 	</package>

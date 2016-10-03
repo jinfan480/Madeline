@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Artefact detail</title>
+</head>
+<script type="text/javascript">
+function viewArtefact(){
+	var url = document.location.href;
+    var artId = -1;
+    if (url.indexOf("=")>0)
+    {
+    	artId = url.substring(url.indexOf("=")+1,url.length);
+    }else{
+        alert("Unknown Artefact");
+        return;
+    }
+    var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var json = xmlhttp.responseText;
+			if(json==""||json==null)
+				alert("No such Artefact");
+			else{
+				json = "[" + json + "]";
+				var artefact = eval(json);
+				document.getElementById("title").value = artefact[0].title;
+				document.getElementById("content").value = artefact[0].content;
+				if(artefact[0].isold==true)
+					document.getElementsByName("artefact.isold")[0].checked = true;
+				else
+					document.getElementsByName("artefact.isold")[1].checked = true;
+				document.getElementById("roomId").value = artefact[0].roomid;
+			}
+		}
+	};
+	xmlhttp.open("POST", "artefactView", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("artefactId="+artId);
+}
+</script>
+<body onLoad="viewArtefact()">
+	<label>Artefact Title:</label>
+	<input id="title" type="text" readOnly="readonly"/>
+	<br />
+	<label>Content:</label>
+	<br />
+	<textarea id="content" rows="10" cols="30" readOnly="readonly"></textarea>
+	<br />
+	<label>Image:</label>
+	<br />
+	<label>Audio:</label>
+	<br />
+	<label>Video:</label>
+	<br /> 
+	<label>Old or New</label>
+	<input id="isOld" name="artefact.isold" type="radio" readOnly="readonly">Old
+	<input id="isOld" name="artefact.isold" type="radio" readOnly="readonly">New
+	<br />
+	<label>Room Id:</label>
+	<input id="roomId" readOnly="readonly" type="text" />
+</body>
+</html>
