@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<title>Places</title>
+	<meta name="description" content="Places HTML Directory template powered by Mapplic.">
+
+	<!-- Viewport for Responsivity -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+
+	<!-- Font -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" type="text/css" href="cssRoom/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="cssRoom/simple-line-icons.css">
+	<link rel="stylesheet" type="text/css" href="cssRoom/style.css">
+	<link rel="stylesheet" type="text/css" href="cssRoom/magnificpopup.css">
+	<link rel="stylesheet" type="text/css" href="cssRoom/swiper.min.css">
+	<link rel="stylesheet" type="text/css" href="mapplic/mapplic.css">
+</head>
+<body>
+<div id="wrap">
+	<!-- Header -->
+	<header id="header">
+		<!-- Header Bar -->
+		<div id="header-bar" class="base-bg light-text">
+			<div class="inner container-fluid">
+				<div class="row">
+					<div class="col-xs-4">
+						<ul class="list-inline">
+							<li class="bar-list-item"><i class="icon icon-clock primary-color"></i><small><span class="hidden-xs">Open until </span>10:00 PM</small></li>
+						</ul>
+					</div>
+
+					<div class="col-xs-8">
+						<ul class="list-inline right">
+							<li class="bar-list-item">
+								<i class="icon icon-phone"></i><small>(415) 555-0125</small>
+							</li>
+							<li class="bar-list-item">
+								<a href="directory.html"><i class="icon icon-location-pin primary-color"></i><small><span class="hidden-xs">Mall </span>Directory</small></a>
+							</li>
+							<li class="dropdown hidden-xs">
+								<a href="#" class="bar-list-item dropdown-toggle" id="language-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+									<i class="icon icon-globe-alt primary-color"></i><small>EN</small>
+								</a>
+								<ul class="dropdown-menu dark-text" aria-labelledby="language-dropdown">
+									<li><a href="#">DE</a></li>
+									<li><a href="#">ES</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main Navigation -->
+		<div class="inner container-fluid">
+			<div class="relative">
+				<a class="main-logo left" href="./"><img src="imgRoom/places-logo.svg" alt="logo">Madeline<strong>Rooms</strong></a>
+
+				<!-- Mobile Menu Button -->
+				<div class="nav-icon">
+					<div></div>
+				</div>
+
+				
+			</div>
+		</div>
+	</header>
+	<!-- Header ends -->
+
+	<!-- Content --> 
+	<div id="content">
+
+		<!-- Search -->
+		<section class="sec-sm title">
+			<div class="inner container-fluid">
+				<div class="row">
+					<div class="form-group has-feedback">
+						<div class="col-sm-4 control-label text-left text-center-xs">
+							<h5><i class="icon icon-map"></i> Suggest Rooms for Memories</h5>
+							<h2>Roomless<strong>Memory</strong></h2>
+						</div>
+						<div class="col-sm-8">
+							<input type="search" class="form-control input-lg mapplic-search" id="directory-search" placeholder="Find Memory..." spellcheck="false">
+							<span class="icon-magnifier icon icon-lg form-control-feedback" aria-hidden="true"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Directory -->
+		<section class="sec-sm">
+			<div class="inner container-fluid">
+
+				<div class="row">
+					<!-- Sidebar -->
+					<div class="col-md-4 sidebar-left sticky-sidebar margin-xs">
+
+						<!-- Map Widget -->
+						<div class="widget">
+							<div id="mapplic-dir-small" class="mapplic-widget"></div>
+						</div>
+
+						<!-- Timetable Widget -->
+						<div class="widget timetable">
+							<h5 class="primary-color">Memory Identification</h5>
+							<h3>Overview</h3>
+							<ol class="list-unstyled">
+								<li>Memories in OpenHall: <span>347</span></li>
+								<li>Have Found Room: <span>79</span></li>
+								<li>Wait for Suggestions: <span>268</span></li>
+							</ol>
+						</div>
+					</div>
+
+					<div class="col-md-8 margin-xs filterable">
+
+						<!-- Search heading -->
+						<h2 class="main-heading heading-search"><span class="search-count highlighted">0</span> found</h2>
+
+						<!-- Locations -->
+						<div class="row entry-grid">
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<div class="entry">
+									<a href="imgRoom/oldA.jpg" class="entry-image popup-image">
+										<img class="thumbnail" src="imgRoom/oldA.jpg" alt="logo">
+										<div class="dim"></div>
+										<i class="icon icon-lg icon-magnifier"></i>
+									</a>
+									<small class="entry-category"><a href="#">Sportswear</a></small>
+									<h3 class="entry-title"><a href="single-post.html">Roomless Memory One</a></h3>
+									<div class="entry-meta">
+										<small class="stars">
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star disabled"></i>
+											<a href="#">4 reviews</a>
+										</small>
+										<small><a href="#adidas" class="mapplic-link"><i class="icon icon-location-pin"></i>To be suggested</a></small>
+										<small><a href="#"><i class="icon icon-bubbles"></i>1</a></small>
+									</div>
+									<p class="entry-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+									tempor incididunt.</p>
+								</div>
+
+								<div class="entry">
+									<a href="imgRoom/mem.jpg" class="entry-image popup-image">
+										<img class="thumbnail" src="imgRoom/mem.jpg" alt="logo">
+										<div class="dim"></div>
+										<i class="icon icon-lg icon-magnifier"></i>
+									</a>
+
+									<small class="entry-category"><a href="#">Fashion</a></small>
+									<h3 class="entry-title"><a href="#">Roomless Memory Two</a></h3>
+									<div class="entry-meta">
+										<small class="stars">
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star disabled"></i>
+											<i class="glyphicon glyphicon-star disabled"></i>
+											<a href="#">3 reviews</a>
+										</small>
+										<small><a href="#"><i class="icon icon-location-pin"></i>to be suggested</a></small>
+										<small><a href="#"><i class="icon icon-bubbles"></i>3</a></small>
+									</div>
+									<p class="entry-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+									tempor incididunt.</p>
+								</div>
+
+								<div class="entry">
+									<a href="imgRoom/p3.jpg" class="entry-image popup-image">
+										<img class="thumbnail" src="imgRoom/p3.jpg" alt="logo">
+										<div class="dim"></div>
+										<i class="icon icon-lg icon-magnifier"></i>
+									</a>
+									<small class="entry-category"><a href="#">Footwear</a></small>
+									<h3 class="entry-title"><a href="#">Roomless Memory Three</a></h3>
+									<div class="entry-meta">
+										<small class="stars">
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<a href="#">1 review</a>
+										</small>
+										<small><a href="#"><i class="icon icon-location-pin"></i>to be suggested</a></small>
+										<small><a href="#"><i class="icon icon-bubbles"></i>2</a></small>
+									</div>
+									<p class="entry-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+									tempor incididunt.</p>
+								</div>
+							</div>
+							<div class="col-md-6 col-xs-6">
+								<div class="entry">
+									<a href="imgRoom/nj.jpg" class="entry-image popup-image">
+										<img class="thumbnail" src="imgRoom/nj.jpg" alt="logo">
+										<div class="dim"></div>
+										<i class="icon icon-lg icon-magnifier"></i>
+									</a>
+									<small class="entry-category"><a href="#">Entertainment</a></small>
+									<h3 class="entry-title"><a href="#amc">Roomless Memory Four</a></h3>
+									<div class="entry-meta">
+										<small class="stars">
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star disabled"></i>
+											<a href="#">4 reviews</a>
+										</small>
+										<small><a href="#amc" class="mapplic-link"><i class="icon icon-location-pin"></i>to be suggested</a></small>
+										<small><a href="#"><i class="icon icon-bubbles"></i>0</a></small>
+									</div>
+									<p class="entry-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+									tempor dolore magna aliqua.</p>
+								</div>
+								<div class="entry">
+									<a href="imgRoom/p5.jpg" class="entry-image popup-image">
+										<img class="thumbnail" src="imgRoom/p5.jpg" alt="logo">
+										<div class="dim"></div>
+										<i class="icon icon-lg icon-magnifier"></i>
+									</a>
+									<small class="entry-category"><a href="#">Restaurant</a></small>
+									<h3 class="entry-title"><a href="#">Roomless Memory Six</a></h3>
+									<div class="entry-meta">
+										<small class="stars">
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star"></i>
+											<i class="glyphicon glyphicon-star disabled"></i>
+											<a href="#">2 reviews</a>
+										</small>
+										<small><a href="#applebees" class="mapplic-link"><i class="icon icon-location-pin"></i>to be suggested</a></small>
+										<small><a href="#"><i class="icon icon-bubbles"></i>1</a></small>
+									</div>
+									<p class="entry-desc">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Alphabet -->
+		<section class="sec-xs gray">
+			<div class="inner">
+				<ol class="list-unstyled browse-letters">
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="1">#</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="5" class="active">A</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="2">B</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="4">C</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="2">D</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="10">E</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="14">F</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="6">G</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="8">H</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="1">I</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="2">J</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="16">K</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="1">L</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="8">M</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="1">N</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="9">O</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="2">P</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="11">Q</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="12">R</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="7">S</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="2">T</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="8">U</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="7">V</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="3">W</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="2">X</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="0">Y</a></li>
+					<li><a href="#" data-toggle="tooltip" data-placement="top" title="7">Z</a></li>
+				</ol>
+				<div class="clearfix"></div>
+			</div>
+		</section>
+
+	</div>
+	<!-- Content ends -->
+
+	<!-- Footer -->
+	<footer id="footer" class="light-text">
+		<section class="sec-sm base-bg">
+			<div class="inner container-fluid">
+				<div class="row">
+					<div class="col-sm-4 margin-xs">
+						<a class="main-logo" href="#"><img src="imgRoom/places-logo-light.svg" alt="logo">Madeline<strong>Rooms</strong></a>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt aliqua.</p>
+						<ul class="list-unstyled list-inline link-list">
+							<li><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="icon icon-social-facebook"></i></a></li>
+							<li><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="icon icon-social-twitter"></i></a></li>
+							<li><a href="#" data-toggle="tooltip" data-placement="top" title="LinkedIn"><i class="icon icon-social-linkedin"></i></a></li>
+							<li><a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="icon icon-social-instagram"></i></a></li>
+							<li><a href="#" data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="icon icon-social-pintarest"></i></a></li>
+							<li><a href="#" data-toggle="tooltip" data-placement="top" title="PayPal"><i class="icon icon-paypal"></i></a></li>
+						</ul>
+					</div>
+					<div class="col-sm-2 col-xs-4 col-sm-offset-2">
+						<h4>Clients</h4>
+						<ul class="list-unstyled link-list">
+							<li><a href="#">About us</a></li>
+							<li><a href="#">Team</a></li>
+							<li><a href="#">Careers</a></li>
+							<li><a href="#">Spaces</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-2 col-xs-4">
+						<h4>Locations</h4>
+						<ul class="list-unstyled link-list">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Directory</a></li>
+							<li><a href="#">About</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-2 col-xs-4">
+						<h4>Company</h4>
+						<ul class="list-unstyled link-list">
+							<li><a href="#">Careers</a></li>
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">Information</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="sec-xs base-bg">
+			<div class="inner footer-bar">
+				<span class="copyright">Copyright &copy; 2016<span class="hidden-xs"> - All Rights Reserved</span></span>
+				<ul class="list-unstyled list-inline link-list right">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Contact</a></li>
+					<li><a href="#">Privacy</a></li>
+				</ul>
+			</div>
+		</section>
+	</footer>
+	<!-- Footer ends -->
+
+</div>
+	<!-- General scripts -->
+	<script type="text/javascript" src="jsRoom/jquery.min.js"></script>
+	<script type="text/javascript" src="jsRoom/bootstrap.min.js"></script>
+	<script type="text/javascript" src="jsRoom/jquery.sticky-kit.min.js"></script>
+	
+	<!-- Includes -->
+	<script type="text/javascript" src="jsRoom/swiper.jquery.min.js"></script>
+	<script type="text/javascript" src="jsRoom/magnificpopup.js"></script>
+	<script type="text/javascript" src="jsRoom/skycons.js"></script>
+	
+	<!-- Mapplic scripts -->
+	<script type="text/javascript" src="jsRoom/jquery.easing.js"></script>
+	<script type="text/javascript" src="jsRoom/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="jsRoom/hammer.min.js"></script>
+	<script type="text/javascript" src="mapplic/mapplic.js"></script>
+	<script type="text/javascript" src="jsRoom/places.js"></script>
+</body>
+</html>
