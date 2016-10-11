@@ -20,14 +20,14 @@ public class ArtefactService {
 	
 	public String addArtefact(Artefact artefact){
 		if(artefact == null){
-			return "artefact_null";
+			return "Null Artefact";
 		}else if(artefact.getTitle().isEmpty() || artefact.getRoomid()==null){
-			return "incomplete content";
+			return "Incomplete Content";
 		}
 		if(artefactDao.addArtefact(artefact)){
-			return "add_succeeded";
+			return "Artefact Added";
 		}else{
-			return "add_failed";
+			return "Fail to Add";
 		}
 	}
 	
@@ -44,14 +44,14 @@ public class ArtefactService {
 	
 	public String modifyArtefact(Artefact artefact){
 		if(artefact == null){
-			return "artefact_null";
+			return "Null Artefact";
 		}else if(artefact.getTitle().isEmpty() || artefact.getRoomid()==null){
-			return "incomplete content";
+			return "Incomplete Content";
 		}
 		if(artefactDao.modifyArtefact(artefact)){
-			return "modify_succeeded";
+			return "Artefact Modified";
 		}else{
-			return "modify_failed";
+			return "Fail to Modify";
 		}
 	}
 

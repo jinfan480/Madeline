@@ -97,7 +97,7 @@ public class ArtefactDaoImpl implements ArtefactDao {
 	public String artefactShow(String room, int isOld, int page, int size) {
 		Session session = sessionFactory.getCurrentSession();
 		String HQL = "from Artefact where 1=1";
-		if(!room.equals("All"))
+		if(!room.equals("All")&&!room.equals(""))
 			HQL += " and roomid=" + room;
 		if(isOld!=-1)
 			HQL += " and isold=" + isOld;

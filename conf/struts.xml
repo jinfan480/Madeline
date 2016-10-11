@@ -20,8 +20,8 @@
 		<action name="room*" class="floorRoomAction" method="room{1}">
 		</action>
 		<action name="artefact*" class="artefactAction" method="artefact{1}">
-			<result name="add_succeeded">/Artefact_show.html</result>
-			<result name="modify_succeeded">/Artefact_show.html</result>
+			<result name="Artefact Added">/Admin_Artefacts.jsp</result>
+			<result name="Artefact Modified">/Admin_Artefacts.jsp</result>
 		</action>
 		
 	</package>
