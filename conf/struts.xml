@@ -9,10 +9,11 @@
 		<default-action-ref name="index"></default-action-ref>
 		
 		<action name="user*" class="userAction" method="user{1}">
-			<result name="login_succeeded">/index.html</result>
-			<result name="login_failed">/loginFailed.html</result>
-			<result name="resgister_succeeded">/index.html</result>
-			<result name="username_exists">/RegisterFailed.html</result>
+			<result name="login_as_admin">/Admin_DashBoard.jsp</result>
+			<result name="login_as_user">/User_Timeline.html</result>
+			<result name="login_failed">/loginRegister.jsp</result>
+			<result name="resgister_succeeded">/User_Timeline.html</result>
+			<result name="username_exists">/loginRegister.jsp</result>
 		</action>
 		
 		<action name="floor*" class="floorRoomAction" method="floor{1}">

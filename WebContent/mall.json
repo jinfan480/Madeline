@@ -37,8 +37,8 @@
 		{
 			"id": "basement-floor",
 			"title": "Basement",
-			"map": "img/mall/mall-underground.svg",
-			"minimap": "img/mall/mall-underground-mini.jpg",
+			"map": "imgRoom/mall/mall-underground.svg",
+			"minimap": "imgRoom/mall/mall-underground-mini.jpg",
 			"locations": [
 				{
 					"id": "gap",
@@ -56,7 +56,7 @@
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "misc",
-					"thumbnail": "img/thumb.jpg",
+					
 					"link": "location.html",
 					"x": "0.5183",
 					"y": "0.2700"
@@ -66,18 +66,18 @@
 		{
 			"id": "ground-floor",
 			"title": "Ground Floor",
-			"map": "img/mall/mall-ground.svg",
-			"minimap": "img/mall/mall-ground-mini.jpg",
+			"map": "imgRoom/mall/mall-ground.svg",
+			"minimap": "imgRoom/mall/mall-ground-mini.jpg",
 			"show": "true",
 			"locations": [
 				{
 					"id": "sears",
-					"title": "Sears",
+					"title": "Department of surgery ",
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "dep",
 					"link": "location.html",
-					"thumbnail": "img/thumb7.jpg",
+					"link": "location.html",
 					"x": "0.7935",
 					"y": "0.2040",
 					"zoom": "5"
@@ -95,11 +95,11 @@
 				},
 				{
 					"id": "jcpenney",
-					"title": "JCPenney",
+					"title": "Instrument room ",
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "dep",
-					"thumbnail": "img/thumb5.jpg",
+					
 					"link": "location.html",
 					"x": "0.6651",
 					"y": "0.6934",
@@ -107,33 +107,33 @@
 				},
 				{
 					"id": "walgreens",
-					"title": "Walgreens",
+					"title": "Duty room for man/ woman",
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "health",
-					"thumbnail": "img/thumb8.jpg",
+					
 					"link": "location.html",
 					"x": "0.4611",
 					"y": "0.5426"
 				},
 				{
 					"id": "sephora",
-					"title": "Sephora",
+					"title": "Department of obstetrics",
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "health",
-					"thumbnail": "img/thumb8.jpg",
+					
 					"link": "location.html",
 					"x": "0.7504",
 					"y": "0.5211"
 				},
 				{
 					"id": "geox",
-					"title": "Geox",
+					"title": "Cell room",
 					"about": "Lorem ipsum",
 					"description": "<p>Ut enim ad minim veniam ut aliquip consequat.</p>",
 					"category": "clothing",
-					"thumbnail": "img/thumb3.jpg",
+					
 					"link": "location.html",
 					"x": "0.3947",
 					"y": "0.5644"
@@ -151,11 +151,11 @@
 				},
 				{
 					"id": "massimodutti",
-					"title": "Massimo Dutti",
+					"title": "Record room",
 					"about": "Lorem ipsum",
 					"description": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
 					"category": "clothing",
-					"thumbnail": "img/thumb2.jpg",
+					
 					"link": "location.html",
 					"x": "0.6214",
 					"y": "0.2627",
@@ -163,22 +163,22 @@
 				},
 				{
 					"id": "adidas",
-					"title": "Adidas",
+					"title": "Director’s office",
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "clothing",
-					"thumbnail": "img/thumb1.jpg",
+					
 					"link": "location.html",
 					"x": "0.3688",
 					"y": "0.3839"
 				},
 				{
 					"id": "starbucks",
-					"title": "test",
+					"title": "Operation room",
 					"about": "Lorem ipsum",
 					"description": "<p>Serving hot and cold beverages, whole-bean coffee, espresso and caffe latte.</p>",
 					"category": "food",
-					"thumbnail": "img/thumb6.jpg",
+					
 					"link": "location.html",
 					"x": "0.5421",
 					"y": "0.5236",
@@ -186,11 +186,11 @@
 				},
 				{
 					"id": "zara",
-					"title": "Zara",
+					"title": "Department of gynaecology",
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "clothing",
-					"thumbnail": "img/thumb4.jpg",
+					
 					"link": "location.html",
 					"x": "0.4785",
 					"y": "0.2753",
@@ -201,8 +201,8 @@
 		{
 			"id": "first-floor",
 			"title": "First Floor",
-			"map": "img/mall/mall-level1.svg",
-			"minimap": "img/mall/mall-level1-mini.jpg",
+			"map": "imgRoom/mall/mall-level1.svg",
+			"minimap": "imgRoom/mall/mall-level1-mini.jpg",
 			"locations": [
 				{
 					"id": "applebees",
@@ -210,7 +210,7 @@
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "food",
-					"thumbnail": "img/thumb.jpg",
+					
 					"link": "location.html",
 					"x": "0.7584",
 					"y": "0.2169",
@@ -222,7 +222,7 @@
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "food",
-					"thumbnail": "img/thumb.jpg",
+					
 					"link": "location.html",
 					"x": "0.7488",
 					"y": "0.5024"
@@ -233,7 +233,7 @@
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "food",
-					"thumbnail": "img/thumb.jpg",
+					
 					"link": "location.html",
 					"x": "0.7374",
 					"y": "0.3768"
@@ -244,7 +244,7 @@
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "food",
-					"thumbnail": "img/thumb.jpg",
+					
 					"link": "location.html",
 					"x": "0.7086",
 					"y": "0.5311"
@@ -255,7 +255,7 @@
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "food",
-					"thumbnail": "img/thumb7.jpg",
+					
 					"link": "location.html",
 					"x": "0.6257",
 					"y": "0.2700"
@@ -266,7 +266,7 @@
 					"about": "Ut enim ad minim veniam",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "health",
-					"thumbnail": "img/thumb.jpg",
+					
 					"link": "location.html",
 					"x": "0.5104",
 					"y": "0.2371"
@@ -277,7 +277,7 @@
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "clothing",
-					"thumbnail": "img/thumb.jpg",
+					
 					"link": "location.html",
 					"x": "0.4846",
 					"y": "0.3046"
@@ -288,7 +288,7 @@
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "misc",
-					"thumbnail": "img/thumb.jpg",
+					
 					"link": "location.html",
 					"x": "0.6600",
 					"y": "0.6706"
@@ -299,7 +299,7 @@
 					"about": "Lorem ipsum",
 					"description": "<p>Recognizing the need is the primary condition for design.</p>",
 					"category": "misc",
-					"thumbnail": "img/thumb.jpg",
+					
 					"link": "location.html",
 					"x": "0.3750",
 					"y": "0.5421"
