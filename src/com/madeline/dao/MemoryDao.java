@@ -9,5 +9,8 @@ public interface MemoryDao {
 	
 	public boolean modifyMemory(Memory memory);
 	
-	public boolean searchMemory(Memory memory);
+
+	String memoryShow(String room, int isApproved, int page, int size);
+
+	String memoryShow(String id);
 }

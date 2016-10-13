@@ -1,5 +1,11 @@
 package com.madeline.daoImpl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
@@ -10,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.Gson;
 import com.madeline.dao.MemoryDao;
+import com.madeline.entity.Artefact;
+import com.madeline.entity.Floor;
 import com.madeline.entity.Memory;
 import com.madeline.entity.RelationRoomMemory;
 import com.madeline.entity.RelationUserMemory;
@@ -36,7 +45,7 @@ public class MemoryDaoImpl implements MemoryDao {
 		Session session = sessionFactory.openSession();
 		try{
 			session.save(memory);
-			Query<?> query = session.createQuery("select max(m.id) from Memory");
+			Query<?> query = session.createQuery("select max(m.id) from Memory m");
 			int result = (int)query.getSingleResult();
 			RelationRoomMemory rm = new RelationRoomMemory(result, memory.getRoomid());
 			session.save(rm);
@@ -140,9 +149,70 @@ public class MemoryDaoImpl implements MemoryDao {
 	}
 
 	@Override
-	public boolean searchMemory(Memory memory) {
-		// TODO Auto-generated method stub
-		return false;
+	public String memoryShow(String date, int status, int page, int size) {
+		Session session = sessionFactory.getCurrentSession();
+		String HQL = "from Memory where 1=1";
+		
+			
+		if(status==1)
+			HQL += " and isapproved=1 ";
+		else if(status==2)
+			HQL += " and isapproved=0 ";
+		else if(status==3)
+			HQL += " and isapproved=null ";
+		HQL += " and isdeleted=0";
+		
+		System.out.println(HQL);
+		Query<?> query = session.createQuery(HQL).setFirstResult((page-1)*size).setMaxResults(size);
+		List<Floor> result = new ArrayList<Floor>();
+		try{
+			result = (List<Floor>) query.getResultList();
+		}catch(Exception e){
+			return null;
+		}
+		Gson gson = new Gson();
+		HQL = "select count(*)" + HQL;
+		query = session.createQuery(HQL);
+		Date d = new Date();
+		
+		System.out.println("MEMshow"+date);
+		if(!date.equals("null"))
+		{
+			String[] s = date.split("/");
+			String fDate = s[2]+"-"+s[0]+"-"+s[1]+" ";
+			System.out.println("Show"+fDate);
+			
+			HQL += " and publishdate=?";
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd "); 
+			try {
+				d = sdf.parse(fDate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		query.setDate(0, d);
+		
+		long pages = (long)query.getSingleResult()/size + ((long)query.getSingleResult()%size==0?0:1);
+		return pages + "||" + gson.toJson(result);
 	}
+		
+
+	@Override
+	public String memoryShow(String id) {
+		Session session = sessionFactory.getCurrentSession();
+		Query<?> query = session.createQuery("from Memory where memoryid='" + id + "'");
+		Memory memory = null;
+		try{
+			memory = (Memory)query.getSingleResult();
+		}catch(NoResultException ne){
+			return null;
+		}
+		Gson gson = new Gson();
+		return gson.toJson(memory);
+	}
+
 
 }
