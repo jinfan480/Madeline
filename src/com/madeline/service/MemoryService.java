@@ -26,9 +26,9 @@ public class MemoryService {
 			return "memory_null";
 		}
 		if(memoryDao.addMemory(memory)){
-			return "succeeded";
+			return "add_succeeded";
 		}else{
-			return "failed";
+			return "add_failed";
 		}
 	}
 	
@@ -55,7 +55,35 @@ public class MemoryService {
 		}
 	}
 	
-	
-	
+	public String memorySearch(String date, String isapproved, String page, String size) {
+		int status = -1;
+		if(isapproved.equals("0"))
+			status = 0;
+		else if(isapproved.equals("1"))
+			status = 1;
+		else if(isapproved.equals("2"))
+			status = 2;
+		else if(isapproved.equals("3"))
+			status = 3;
+		else
+			status = -1;
+		int p = 0;
+		int s = 0;
+		try{
+			p = Integer.parseInt(page);
+			s = Integer.parseInt(size);
+		}catch(NumberFormatException e){
+			p = 1;
+			s = 20;
+		}
+		String json = "" + memoryDao.memoryShow(date, status, p, s);
+		return json;
+	}
+
+	public String memorySearch(String id) {
+		String json = "" + memoryDao.memoryShow(id);
+		return json;
+	}
+
 	
 }

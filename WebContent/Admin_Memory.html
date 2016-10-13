@@ -30,7 +30,65 @@
 
 </head>
 
-<body class="ecommerce-page">
+<script type="text/javascript">
+function searchMem(page){
+	var date = document.getElementById("filter-datepicker").value;
+	var status = document.getElementById("statusFilter").value;
+	var size = document.getElementById("page").value;
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var Memory ="";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			var pages = json.split("||")[0];
+			mem = eval(json.split("||")[1]);
+			for(var i=0; i<mem.length; i++){
+				var sta;
+				if(mem[i].isapproved==true)
+					sta = "Approve";
+				else if(mem[i].isapproved==false)
+					sta = "Discard";
+				else
+					sta = "Checking"
+				
+				Memory += "<td>"+mem[i].publishdate+"</td><td>"+mem[i].title+"</td><td>"+mem[i].userid+"</td><td>"+mem[i].content+"</td>";
+
+				Memory += "<td><div class=\"btn-group text-right\">";
+				Memory +=	"<button type=\"button\" class=\"btn btn-success br2 btn-xs fs12 dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\"> Action";
+				Memory += "<span class=\"caret ml5\"></span></button>";
+				Memory += "<ul class=\"dropdown-menu\" role=\"menu\"><li><a href=\"#\" onclick=\"edit("+mem[i].memoryid+")\">Approve</a></li><li><a href=\"#\" onclick=\"Delete("+art[i].artefactid+")\">Discard</a></li><li><a href=\"#\">Checking</a></li></ul></div></td></tr>";
+			}
+			if(pages!=1){
+				var next = parseInt(page) + 1;
+				var pre = parseInt(page) - 1;
+				if(page==1){
+					Memory += "<tr><td align=\"middle\" colspan=\"5\">First Page | <a href=\"javascript:void(0)\"onclick=\"searchMem("+next+")\">Next Page</a></td></tr>"
+				}else if(page==pages){
+					Memory += "<tr><td align=\"middle\" colspan=\"5\"><a href=\"javascript:void(0)\"onclick=\"searchMem("+pre+")\">Previous Page</a> | Final Page</td></tr>"
+				}else{
+					Memory += "<tr><td align=\"middle\" colspan=\"5\"><a href=\"javascript:void(0)\"onclick=\"searchMem("+pre+")\">Previous Page</a> | <a href=\"javascript:void(0)\"onclick=\"searchMem("+next+")\">Next Page</a></td></tr>"
+				}
+			}
+			document.getElementById("memory").innerHTML = Memory;
+		}
+	};
+	alert(page);
+	xmlhttp.open("POST", "memorySearch", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("date="+date+"&isapproved="+status+"&page="+page+"&size="+size);
+}
+
+</script>
+
+
+
+<body class="ecommerce-page" onLoad="searchMem(1)">
 
 
   <!-- End: Theme Preview Pane -->
@@ -402,12 +460,12 @@
               <div class="row">
                 <div class="col-md-4">
                   <label for="filter-datepicker" class="field prepend-picker-icon">
-                    <input type="text" value="02/03/2015" id="filter-datepicker" name="filter-datepicker" class="gui-input" placeholder="Filter by Date">
+                    <input type="text" id="filter-datepicker" name="filter-datepicker" class="gui-input" onchange="searchMem(1)" placeholder="Filter by Date">
                   </label>
                 </div>
                 <div class="col-md-4">
                   <label class="field select">
-                    <select id="filter-status" name="filter-status">
+                    <select id="statusFilter" name="filter-status" onchange="searchMem(1)" >
                       <option value="0">Filter by Status</option>
                       <option value="1">Approved</option>
                       <option value="2">Discard</option>
@@ -418,12 +476,11 @@
                 </div>
                 <div class="col-md-4">
                   <label class="field select">
-                    <select id="filter-customer" name="filter-customer">
-                      <option value="0">Filter by Floor</option>
-                      <option value="1">Basement</option>
-                      <option value="2">Ground Floor</option>
-                      <option value="3">Second Floor</option>
-                      <option value="4">Third Floor</option>
+                    <select id="page" name="bulk-action" onchange="searchMem(1)">
+                      <option value="5">Page size</option>
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
                     </select>
                     <i class="arrow double"></i>
                   </label>
@@ -437,7 +494,6 @@
                 <table class="table admin-form theme-warning tc-checkbox-1 fs13">
                   <thead>
                     <tr class="bg-light">
-                      <th class="text-center">Select</th>
                       <th class="">Upload Date</th>
                       <th class="">Title</th>
                       <th class="">Uploader</th>
@@ -445,7 +501,7 @@
                       <th class="text-center">Status</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <!-- <tbody>
                     <tr>
                       <td class="">
                         <label class="option block mn">
@@ -772,7 +828,7 @@
                       </td>
                     </tr>
                     
-                  </tbody>
+                  </tbody> -->
                 </table>
               </div>
             </div>
