@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016-9-22 15:31:37 by Hibernate Tools 5.1.0.Beta1 -->
+<!-- Generated 2016-10-13 17:27:16 by Hibernate Tools 5.1.0.Beta1 -->
 <hibernate-mapping>
     <class name="com.madeline.entity.User" table="user" catalog="madeline" optimistic-lock="version">
         <id name="userid" type="java.lang.Integer">
@@ -29,8 +29,17 @@
         <property name="portrait" type="string">
             <column name="PORTRAIT" />
         </property>
+        <property name="firstname" type="string">
+            <column name="FIRSTNAME" />
+        </property>
+        <property name="lastname" type="string">
+            <column name="LASTNAME" />
+        </property>
         <property name="description" type="string">
             <column name="DESCRIPTION" />
+        </property>
+        <property name="hobby" type="string">
+            <column name="HOBBY" />
         </property>
         <property name="issubscribed" type="java.lang.Boolean">
             <column name="ISSUBSCRIBED" />

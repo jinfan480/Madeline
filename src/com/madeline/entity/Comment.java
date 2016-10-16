@@ -1,5 +1,5 @@
 package com.madeline.entity;
-// Generated 2016-9-22 15:31:37 by Hibernate Tools 5.1.0.Beta1
+// Generated 2016-10-13 17:27:15 by Hibernate Tools 5.1.0.Beta1
 
 import java.util.Date;
 

@@ -18,22 +18,38 @@ public class UserService {
 		this.userDao = userDao;
 	}
 
-	public String userRegister(User user) {
+	public User userRegister(User user) {
 		if(user == null){
-			return "user_null";
+			return null;
 		}else if(user.getUsername()==null || user.getUserpassword()==null){
-			return "user_null";
+			return null;
 		}
 		return userDao.userReg(user);
 	}
 	
-	public String userLogin(User user){
+	public User userLogin(User user){
 		if(user == null){
-			return "user_null";
+			return null;
 		}else if(user.getUsername()==null || user.getUserpassword()==null){
-			return "user_null";
+			return null;
 		}
 		return userDao.userLogin(user);
+	}
+
+	public String userSearch(String id) {
+		String json = "" + userDao.userSearch(id);
+		return json;
+	}
+
+	public String userModify(User user) {
+		if(user==null||user.getUserid()==null){
+			return "Null User";
+		}
+		if(userDao.userModify(user)){
+			return "User Modified";
+		}else{
+			return "Fail to Modify";
+		}
 	}
 
 

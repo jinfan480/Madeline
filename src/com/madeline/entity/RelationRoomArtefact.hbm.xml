@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016-9-22 15:31:37 by Hibernate Tools 5.1.0.Beta1 -->
+<!-- Generated 2016-10-13 17:27:16 by Hibernate Tools 5.1.0.Beta1 -->
 <hibernate-mapping>
     <class name="com.madeline.entity.RelationRoomArtefact" table="relation_room_artefact" catalog="madeline" optimistic-lock="version">
         <id name="artefactid" type="int">

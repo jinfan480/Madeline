@@ -52,7 +52,7 @@ function LoadLevel(message){
 // 			alert(json);
 			floor = eval(json);
 			for(var i=0; i<floor.length; i++){
-				Level += "<option value=\""+floor[i].floornum+"\">"+floor[i].floornum+"</option>";
+				Level += "<option value=\""+floor[i].floornum+"\">"+floor[i].floordescript+"</option>";
 			}
 			document.getElementById("level").innerHTML = Level;
 			LoadRoom();
@@ -80,7 +80,7 @@ function searchRoom(){
 // 			alert(json);
 			room = eval(json);
 			for(var i=0; i<room.length; i++){
-				Room += "<option value=\""+room[i].roomnum+"\">"+room[i].roomnum+":"+room[i].roomname+"</option>";
+				Room += "<option value=\""+room[i].roomnum+"\">"+room[i].roomname+"</option>";
 			}
 			document.getElementById("room").innerHTML = Room;
 		}
@@ -122,7 +122,7 @@ function LoadRoom(){
 // 			alert(json);
 			room = eval(json);
 			for(var i=0; i<room.length; i++){
-				Room += "<option value=\""+room[i].roomnum+"\">"+room[i].roomnum+":"+room[i].roomname+"</option>";
+				Room += "<option value=\""+room[i].roomnum+"\">"+room[i].roomname+"</option>";
 			}
 			document.getElementById("roomFilter").innerHTML = Room;
 			searchArt(1);
@@ -218,7 +218,7 @@ function edit(artId){
 				for(var i=0; i<select.options.length; i++){  
 				    if(select.options[i].value == roomid.substring(0,select.options[i].value.length)){  
 				        select.options[i].selected = true;
-				        break;  
+				        break;
 				    }  
 				}
 				if(artefact[0].picture==null||artefact[0].picture==""){

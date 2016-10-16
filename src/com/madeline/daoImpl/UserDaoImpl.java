@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.Gson;
 import com.madeline.dao.UserDao;
+import com.madeline.entity.RelationRoomArtefact;
 import com.madeline.entity.User;
 
 @Repository @Transactional
@@ -28,31 +30,58 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public String userReg(User user) {
-		Session session = sessionFactory.openSession();
+	public User userReg(User user) {
+		Session session = sessionFactory.getCurrentSession();
 		try{
 			session.save(user);
 		}catch(ConstraintViolationException cve){
-			return "username_exists";
+			return null;
 		}
-		return user.getUsername();
+		return user;
 	}
 
 	@Override
-	public String userLogin(User user) {
-		Session session = sessionFactory.openSession();
+	public User userLogin(User user) {
+		Session session = sessionFactory.getCurrentSession();
 		Query<?> query = session.createQuery("from User where username='" + user.getUsername() + "'");
 		User userResult = null;
 		try{
 			userResult = (User) query.getSingleResult();
 		}catch(NoResultException ne){
-			return "name_not_exist";
+			return null;
 		}
 		if (!user.getUserpassword().equals(userResult.getUserpassword())) {
-			return "password_not_match";
+			return null;
 		}
-		return user.getUsername();
+		return userResult;
 
+	}
+
+	@Override
+	public String userSearch(String id) {
+		Session session = sessionFactory.getCurrentSession();
+		Query<?> query = session.createQuery("from User where userid='" + id + "'");
+		User user = null;
+		try{
+			user = (User)query.getSingleResult();
+		}catch(NoResultException ne){
+			return null;
+		}
+		Gson gson = new Gson();
+		return gson.toJson(user);
+	}
+
+	@Override
+	public boolean userModify(User user) {
+		Session session = sessionFactory.getCurrentSession();
+		try{
+			session.update(user);
+		// TODO
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }

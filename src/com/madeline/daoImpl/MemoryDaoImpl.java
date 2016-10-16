@@ -176,8 +176,8 @@ public class MemoryDaoImpl implements MemoryDao {
 		query = session.createQuery(HQL);
 		Date d = new Date();
 		
-		if(!date.isEmpty())
-		{
+
+		if(!date.equals("null")&&!date.isEmpty()){
 			String[] s = date.split("/");
 			String fDate = s[2]+"-"+s[0]+"-"+s[1]+" ";
 			System.out.println("Show"+fDate);
@@ -195,7 +195,6 @@ public class MemoryDaoImpl implements MemoryDao {
 		}
 		
 		
-		System.out.println(HQL);
 		
 		long pages = (long)query.getSingleResult()/size + ((long)query.getSingleResult()%size==0?0:1);
 		return pages + "||" + gson.toJson(result);

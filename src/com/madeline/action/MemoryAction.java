@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.madeline.entity.Artefact;
 import com.madeline.entity.Memory;
 import com.madeline.service.MemoryService;
 import com.opensymphony.xwork2.ActionContext;

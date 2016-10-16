@@ -154,7 +154,7 @@ function LoadRoom(){
     <!-- Start: Header -->
     <header class="navbar navbar-fixed-top navbar-shadow">
       <div class="navbar-branding">
-        <a class="navbar-brand" href="dashboard.html">
+        <a class="navbar-brand" href="index.html">
           <b>Madeline</b>User
         </a>
         <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
@@ -346,7 +346,7 @@ function LoadRoom(){
               </a>
               <div class="media-body">
                 <div class="media-links">
-                   <a href="#" class="sidebar-menu-toggle">User Menu -</a> <a href="pages_login(alt).html">Logout</a>
+                   <a href="#" class="sidebar-menu-toggle">User Menu -</a> <a href="User_Login.html">Logout</a>
                 </div>
                 <div class="media-author">Anna</div>
               </div>
@@ -387,7 +387,10 @@ function LoadRoom(){
                 </a>
               </li>
               
-              
+               <li >
+                <a href="indexRoom.html">
+                  <span class="fa fa-picture-o"></span> Explore </a>
+              </li>
               <li >
                 <a href="User_Settings.html">
                   <span class="fa fa-gears"></span> Settings </a>
@@ -554,7 +557,11 @@ function LoadRoom(){
                                   </div>
                                   <div class="col-md-4">
                                     <label for="name2" class="field prepend-icon">
+<<<<<<< HEAD:WebContent/User_Timeline.jsp
                                       <!-- <input type="text" name="memory.title" id="memory.title" class="event-name gui-input" placeholder="Memory Title"> -->
+=======
+                                      <input type="text" name="name2" id="name2" class="event-name gui-input" placeholder="Tags">
+>>>>>>> e578f7d79c7e1edf503be1e6390923e9e85c2218:WebContent/User_Timeline.html
                                       <label for="name2" class="field-icon">
                                         <i class="fa fa-pencil"></i>
                                       </label>
@@ -611,7 +618,11 @@ function LoadRoom(){
 
                               <div class="col-md-6">
                                 <label for="date1" class="field prepend-icon">
+<<<<<<< HEAD:WebContent/User_Timeline.jsp
                                   <input type="text" name="memory.date" id="memory.date" class="datepicker gui-input" placeholder="Data">
+=======
+                                  <input type="text" name="date1" id="date1" class="datepicker gui-input" placeholder="Memory Data">
+>>>>>>> e578f7d79c7e1edf503be1e6390923e9e85c2218:WebContent/User_Timeline.html
                                   <label for="date1" class="field-icon">
                                     <i class="fa fa-calendar"></i>
                                   </label>
