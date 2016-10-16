@@ -152,7 +152,6 @@ public class MemoryDaoImpl implements MemoryDao {
 	public String memoryShow(String date, int status, int page, int size) {
 		Session session = sessionFactory.getCurrentSession();
 		String HQL = "from Memory where 1=1";
-		
 			
 		if(status==1)
 			HQL += " and isapproved=1 ";
@@ -160,6 +159,8 @@ public class MemoryDaoImpl implements MemoryDao {
 			HQL += " and isapproved=0 ";
 		else if(status==3)
 			HQL += " and isapproved=null ";
+		else if(status==-1)
+			return "wrong status";
 		HQL += " and isdeleted=0";
 		
 		System.out.println(HQL);
@@ -175,8 +176,7 @@ public class MemoryDaoImpl implements MemoryDao {
 		query = session.createQuery(HQL);
 		Date d = new Date();
 		
-		System.out.println("MEMshow"+date);
-		if(!date.equals("null"))
+		if(!date.isEmpty())
 		{
 			String[] s = date.split("/");
 			String fDate = s[2]+"-"+s[0]+"-"+s[1]+" ";
@@ -186,14 +186,16 @@ public class MemoryDaoImpl implements MemoryDao {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd "); 
 			try {
 				d = sdf.parse(fDate);
+				System.out.println("aaaa"+d.getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			query.setDate(0, d);
 		}
 		
 		
-		query.setDate(0, d);
+		System.out.println(HQL);
 		
 		long pages = (long)query.getSingleResult()/size + ((long)query.getSingleResult()%size==0?0:1);
 		return pages + "||" + gson.toJson(result);
@@ -203,7 +205,7 @@ public class MemoryDaoImpl implements MemoryDao {
 	@Override
 	public String memoryShow(String id) {
 		Session session = sessionFactory.getCurrentSession();
-		Query<?> query = session.createQuery("from Memory where memoryid='" + id + "'");
+		Query<?> query = session.createQuery("from Memory where userid='" + id + "'");
 		Memory memory = null;
 		try{
 			memory = (Memory)query.getSingleResult();

@@ -21,14 +21,14 @@ public class MemoryService {
 	
 	public String addMemory(Memory memory){
 		if(memory == null){
-			return "memory_null";
-		}else if(memory.getTitle()==null){
-			return "memory_null";
+			return "Null Memory";
+		}else if(memory.getTitle().isEmpty()){
+			return "Incomplete Content";
 		}
 		if(memoryDao.addMemory(memory)){
-			return "add_succeeded";
+			return "Memory Added";
 		}else{
-			return "add_failed";
+			return "Fail to Add";
 		}
 	}
 	

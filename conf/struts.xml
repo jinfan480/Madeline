@@ -24,8 +24,7 @@
 			<result name="Artefact Modified">/Admin_Artefacts.jsp</result>
 		</action>
 		<action name="memory*" class="memoryAction" method="memory{1}">
-			<result name="Memory Added">/Admin_Memory.html</result>
-			<result name="Memory Modified">/Admin_Memory.html</result>
+			<result name="Memory Added">/User_Timeline.jsp</result>
 		</action>
 		
 	</package>

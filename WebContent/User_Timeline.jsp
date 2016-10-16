@@ -33,7 +33,116 @@
 
 </head>
 
-<body class="timeline-page">
+<script type="text/javascript">
+
+function LoadLevel(message){
+	var button = "<button class=\"btn btn-primary\" type=\"button\" onclick=\"addMemory()\">Add Memory</button>";
+	document.getElementById("button").innerHTML =  button;
+	document.getElementById("image").value="";
+	
+// 	var message = '${message}';
+	if(message!=null&&message!=""){
+		alert(message);
+	}
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var Level = "<option selected=\"selected\">Floor</option>";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			floor = eval(json);
+			for(var i=0; i<floor.length; i++){
+				Level += "<option value=\""+floor[i].floornum+"\">"+floor[i].floornum+"</option>";
+			}
+			document.getElementById("level").innerHTML = Level;
+			LoadRoom();
+		}
+	};
+	
+	xmlhttp.open("POST", "floorShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send(null);
+}
+
+function searchRoom(){
+	var level = document.getElementById("level").value;
+	if(level=="Floor")
+		return;
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var Room = "<option selected=\"selected\" value=\"Room\">Room</option>";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			room = eval(json);
+			for(var i=0; i<room.length; i++){
+				Room += "<option value=\""+room[i].roomnum+"\">"+room[i].roomnum+":"+room[i].roomname+"</option>";
+			}
+			document.getElementById("room").innerHTML = Room;
+		}
+	};
+	xmlhttp.open("POST", "roomShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("level="+level);
+}
+function addMemory(){
+	if(document.getElementById("image").value!=""){
+		var type = document.getElementById("image").value.substr(document.getElementById("image").value.lastIndexOf(".")).toLowerCase();
+		if(type==".gif"||type==".png"||type==".jpeg"||type==".jpg"||type==".bmp"){
+			
+		}else{
+			alert("Must upload a image file");
+			return;
+		}
+	}
+	if(document.getElementById("room").value=="Room"){
+		alert("Choose a Room");
+		return;
+	}
+	//document.memoryAction.action="memoryAdd";
+	document.memoryAction.submit();
+}
+
+function LoadRoom(){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var Room = "<option value=\"All\">Filter by Room</option>";
+			Room += "<option value=\"All\">All</option>";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			room = eval(json);
+			for(var i=0; i<room.length; i++){
+				Room += "<option value=\""+room[i].roomnum+"\">"+room[i].roomnum+":"+room[i].roomname+"</option>";
+			}
+			//document.getElementById("roomFilter").innerHTML = Room;
+		}
+	};
+	xmlhttp.open("POST", "roomShow", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send(null);
+}
+
+</script>
+
+
+
+<body class="timeline-page" onLoad="LoadLevel('${message}')">
 
   <!-- Start: Theme Preview Pane -->
   
@@ -376,6 +485,7 @@
       <section id="content" class="animated fadeIn">
 
         <!-- Timeline Wrapper -->
+        <form name="memoryAction" method="post" enctype="multipart/form-data" action="memoryAdd">
         <div id="timeline" class="timeline-single mt30">
 
           <!-- Timeline Divider -->
@@ -391,6 +501,12 @@
           <div class="row">
 
             <!-- Timeline - Left Column -->
+          
+          <input id="id" name="memory.memoryid" type="hidden">
+          <input id="uid" name="memory.userid" type="hidden">
+          <input id="picture" name="memory.picture" type="hidden">
+            
+            
             <div class="col-sm-6 left-column">
               <div class="timeline-item">
                 <div class="timeline-icon">
@@ -402,10 +518,10 @@
                     <ul class="nav panel-tabs">
                       
                       <li >
-                        <a href="#tab2" data-toggle="tab">Description</a>
+                        <a href="#tab1" data-toggle="tab">Description</a>
                       </li>
                       <li class="active">
-                        <a href="#tab1" data-toggle="tab">Image</a>
+                        <a href="#tab2" data-toggle="tab">Image</a>
                       </li>
                       <li>
                         <a href="#tab3" data-toggle="tab">Video</a>
@@ -419,8 +535,8 @@
                     <div class="admin-form theme-primary">
                       <div class="tab-content pn pt10 border-none">
 
-                        <div id="tab1" class="tab-pane active">
-                          <form id="timeline-image-form" role="form">
+                        <div id="tab2" class="tab-pane active">
+                        <!--   <form id="timeline-image-form" role="form"> -->
 
                             <div class="fileupload fileupload-new" data-provides="fileupload">
 
@@ -433,12 +549,12 @@
                                     <span class="button btn-system btn-file btn-block">
                                       <span class="fileupload-new">Select image</span>
                                       <span class="fileupload-exists">Change File</span>
-                                      <input type="file">
+                                      <input id="image" name="image" type="file">
                                     </span>
                                   </div>
                                   <div class="col-md-4">
                                     <label for="name2" class="field prepend-icon">
-                                      <input type="text" name="name2" id="name2" class="event-name gui-input" placeholder="Memory Title">
+                                      <!-- <input type="text" name="memory.title" id="memory.title" class="event-name gui-input" placeholder="Memory Title"> -->
                                       <label for="name2" class="field-icon">
                                         <i class="fa fa-pencil"></i>
                                       </label>
@@ -465,9 +581,9 @@
                                   <div class="col-md-3">
                                     <a href="#" class="button btn-danger btn-block fileupload-exists" data-dismiss="fileupload">Remove</a>
                                   </div>
-                                  <div class="col-md-9 text-right">
+                                  <!-- <div class="col-md-9 text-right">
                                     <button type="submit" class="button btn-primary submit-btn">Upload Memory</button>
-                                  </div>
+                                  </div> -->
                                 </div>
 
                               </div>
@@ -475,17 +591,17 @@
 
                             </div>
 
-                          </form>
+                          <!-- </form> -->
                         </div>
 
-                        <div id="tab2" class="tab-pane">
-                          <form id="timeline-basic-form" role="form">
+                        <div id="tab1" class="tab-pane">
+                          <!-- <form id="timeline-basic-form" role="form"> -->
 
                             <div class="section row">
 
                               <div class="col-md-6">
                                 <label for="name1" class="field prepend-icon">
-                                  <input type="text" name="name1" id="name1" class="event-name gui-input" placeholder="Title">
+                                  <input type="text" name="memory.title" id="memory.title" class="event-name gui-input" placeholder="Title">
                                   <label for="name1" class="field-icon">
                                     <i class="fa fa-pencil"></i>
                                   </label>
@@ -495,7 +611,7 @@
 
                               <div class="col-md-6">
                                 <label for="date1" class="field prepend-icon">
-                                  <input type="text" name="date1" id="date1" class="datepicker gui-input" placeholder="Data">
+                                  <input type="text" name="memory.date" id="memory.date" class="datepicker gui-input" placeholder="Data">
                                   <label for="date1" class="field-icon">
                                     <i class="fa fa-calendar"></i>
                                   </label>
@@ -508,7 +624,7 @@
 
                             <div class="section mb30">
                               <label class="field prepend-icon">
-                                <textarea class="event-desc gui-textarea" id="desc1" name="desc1" placeholder="Type the description for the memory here..."></textarea>
+                                <textarea class="event-desc gui-textarea" id="memory.content" name="memory.content" placeholder="Type the description for the memory here..."></textarea>
                                 <label for="desc1" class="field-icon">
                                   <i class="fa fa-comments"></i>
                                 </label>
@@ -518,23 +634,23 @@
                             </div>
                             <!-- end section row section -->
 
-                            <div class="panel-footer mhn15 mbn15 text-right">
+                            <!-- <div class="panel-footer mhn15 mbn15 text-right">
                               <button type="submit" class="button btn-primary submit-btn">Upload Memory</button>
-                            </div>
+                            </div> -->
                             <!-- end .form-footer section -->
 
-                          </form>
+                          <!-- </form> -->
                         </div>
 
                         <div id="tab3" class="tab-pane">
-                          <form id="timeline-video-form" role="form">
+                          <!-- <form id="timeline-video-form" role="form"> -->
 
                             
                             <!-- end section row section -->
 
                             <div class="section mb30">
                               <label class="field prepend-icon">
-                                <textarea class="event-video gui-textarea" id="desc2" name="desc2" placeholder="<iframe></iframe>">
+                                <textarea class="event-video gui-textarea" id="memory.video" name="memory.video" placeholder="<iframe></iframe>">
                                   <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/q94n3eWOWXM?rel=0" allowfullscreen=""></iframe>
                                 </textarea>
                                 <label for="desc2" class="field-icon">
@@ -546,27 +662,28 @@
                             </div>
                             <!-- end section row section -->
 
-                            <div class="panel-footer mhn15 mbn15 text-right">
+                            <!-- <div class="panel-footer mhn15 mbn15 text-right">
                               <button type="submit" class="button btn-primary submit-btn">Upload Memory</button>
-                            </div>
+                            </div> -->
                             <!-- end .form-footer section -->
 
-                          </form>
+                          <!-- </form> -->
                         </div>
 
                         <div id="tab4" class="tab-pane">
 
-                          <form id="timeline-map-form" role="form">
+                          <!-- <form id="timeline-map-form" role="form"> -->
 
                             <div class="section row">
                                 <div class="col-md-5">
                       <label for="states" class="field select">
-                        <select id="states" name="states">
-                          <option value="">Choose Floor</option>
+                       <select id="level" name="product-status" onChange="searchRoom()">
+                       <option selected="selected">Floor</option>
+                         <!--  <option value="">Choose Floor</option>
                           <option value="AL">Basement</option>
                           <option value="AK">Ground Floor</option>
                           <option value="AZ">Second Floor</option>
-                          <option value="AR">Third Floor</option>
+                          <option value="AR">Third Floor</option> -->
                           
                          
                         </select>
@@ -575,11 +692,12 @@
                     </div>
                               <div class="col-md-5">
                       <label for="states" class="field select">
-                        <select id="states" name="states">
-                          <option value="">Choose Room</option>
+                        <select id="room" name="memory.roomid">
+                        <option selected="selected">Room</option>
+                          <!-- <option value="">Choose Room</option>
                           <option value="AL">Sample Room 1</option>
                           <option value="AK">Sample Room 2</option>
-                          <option value="AZ">Sample Room 3</option>
+                          <option value="AZ">Sample Room 3</option> -->
                           
                          
                         </select>
@@ -594,19 +712,24 @@
                             <!-- end section -->
 
                             <div class="panel-footer mhn15 mbn15 text-right">
-                              <button type="submit" class="button btn-primary submit-btn">Upload Memory</button>
+                            <p class="text-right" id="button">
+                              <button type="submit" class="button btn-primary submit-btn" onclick="addMemory()">Upload Memory</button>
+                            </p>
                             </div>
                             <!-- end .form-footer section -->
 
-                          </form>
+                         <!--  </form> -->
+							
 
                         </div>
 
                       </div>
                     </div>
                   </div>
+                 
                 </div>
               </div>
+              
               <div class="timeline-item">
                 <div class="timeline-icon">
                   <span class="glyphicon glyphicon-user text-primary"></span>
@@ -705,7 +828,7 @@
                   </div>
                   <div class="panel-body">
                     <div class="embed-responsive embed-responsive-16by9">
-                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tGlY7sXVYf0" frameborder="0" allowfullscreen></iframe>
+                      <!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tGlY7sXVYf0" frameborder="0" allowfullscreen></iframe> -->
                     </div>
                   </div>
                 </div>
@@ -740,7 +863,7 @@
           </div>
 
         </div>
-
+</form>
         <!-- Timeline - Demo HTML -->
         <div class="timeline-item panel-clone" id="clone">
           <div class="panel">

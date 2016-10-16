@@ -62,7 +62,7 @@ function searchMem(page){
 				Memory += "<td><div class=\"btn-group text-right\">";
 				Memory +=	"<button type=\"button\" class=\"btn btn-success br2 btn-xs fs12 dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\"> Action";
 				Memory += "<span class=\"caret ml5\"></span></button>";
-				Memory += "<ul class=\"dropdown-menu\" role=\"menu\"><li><a href=\"#\" onclick=\"edit("+mem[i].memoryid+")\">Approve</a></li><li><a href=\"#\" onclick=\"Delete("+art[i].artefactid+")\">Discard</a></li><li><a href=\"#\">Checking</a></li></ul></div></td></tr>";
+				Memory += "<ul class=\"dropdown-menu\" role=\"menu\"><li><a href=\"#\" onclick=\"edit("+mem[i].memoryid+")\">Approve</a></li><li><a href=\"#\" onclick=\"Delete("+mem[i].artefactid+")\">Discard</a></li><li><a href=\"#\">Checking</a></li></ul></div></td></tr>";
 			}
 			if(pages!=1){
 				var next = parseInt(page) + 1;
@@ -78,7 +78,6 @@ function searchMem(page){
 			document.getElementById("memory").innerHTML = Memory;
 		}
 	};
-	alert(page);
 	xmlhttp.open("POST", "memorySearch", true);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("date="+date+"&isapproved="+status+"&page="+page+"&size="+size);
