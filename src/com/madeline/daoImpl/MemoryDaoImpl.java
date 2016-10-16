@@ -18,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.madeline.dao.MemoryDao;
-import com.madeline.entity.Artefact;
-import com.madeline.entity.Floor;
 import com.madeline.entity.Memory;
 import com.madeline.entity.RelationRoomMemory;
 import com.madeline.entity.RelationUserMemory;
@@ -165,25 +163,27 @@ public class MemoryDaoImpl implements MemoryDao {
 		
 		System.out.println(HQL);
 		Query<?> query = session.createQuery(HQL).setFirstResult((page-1)*size).setMaxResults(size);
-		List<Floor> result = new ArrayList<Floor>();
+		List<Memory> result = new ArrayList<Memory>();
 		try{
-			result = (List<Floor>) query.getResultList();
+			result = (List<Memory>) query.getResultList();
 		}catch(Exception e){
 			return null;
 		}
 		Gson gson = new Gson();
-		HQL = "select count(*)" + HQL;
-		query = session.createQuery(HQL);
-		Date d = new Date();
+		String pageHQL = new String();
+		pageHQL = "select count(*)" + HQL;
+		query = session.createQuery(pageHQL);
+		long pages = (long)query.getSingleResult()/size + ((long)query.getSingleResult()%size==0?0:1);
 		
-
+		Date d = new Date();
 		if(!date.equals("null")&&!date.isEmpty()){
 			String[] s = date.split("/");
-			String fDate = s[2]+"-"+s[0]+"-"+s[1]+" ";
+			String fDate = s[2]+"-"+s[0]+"-"+s[1];
 			System.out.println("Show"+fDate);
 			
 			HQL += " and publishdate=?";
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd "); 
+			System.out.println(HQL);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 			try {
 				d = sdf.parse(fDate);
 				System.out.println("aaaa"+d.getTime());
@@ -191,12 +191,19 @@ public class MemoryDaoImpl implements MemoryDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			query = session.createQuery(HQL);
 			query.setDate(0, d);
+			try{
+				result = (List<Memory>) query.getResultList();
+			}catch(Exception e){
+				return null;
+			}
+			gson = new Gson();
+			pageHQL = "select count(*)" + HQL;
+			query = session.createQuery(pageHQL);
+			query.setDate(0, d);
+			pages = (long)query.getSingleResult()/size + ((long)query.getSingleResult()%size==0?0:1);
 		}
-		
-		
-		
-		long pages = (long)query.getSingleResult()/size + ((long)query.getSingleResult()%size==0?0:1);
 		return pages + "||" + gson.toJson(result);
 	}
 		

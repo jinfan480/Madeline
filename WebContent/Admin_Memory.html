@@ -43,7 +43,7 @@ function searchMem(page){
 	}
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var Memory ="";
+			var Memory = "";
 			var json = xmlhttp.responseText;
 // 			alert(json);
 			var pages = json.split("||")[0];
@@ -62,13 +62,9 @@ function searchMem(page){
 				Memory += "<td><div class=\"btn-group text-right\">";
 				Memory +=	"<button type=\"button\" class=\"btn btn-success br2 btn-xs fs12 dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\"> Action";
 				Memory += "<span class=\"caret ml5\"></span></button>";
-<<<<<<< HEAD
-				Memory += "<ul class=\"dropdown-menu\" role=\"menu\"><li><a href=\"#\" onclick=\"edit("+mem[i].memoryid+")\">Approve</a></li><li><a href=\"#\" onclick=\"Delete("+mem[i].artefactid+")\">Discard</a></li><li><a href=\"#\">Checking</a></li></ul></div></td></tr>";
-=======
 				Memory += "<ul class=\"dropdown-menu\" role=\"menu\"><li><a href=\"#\" onclick=\"edit("+mem[i].memoryid+")\">Approve</a></li><li><a href=\"#\" onclick=\"Delete("+mem[i].memoryid+")\">Discard</a></li><li><a href=\"#\">Checking</a></li></ul></div></td></tr>";
->>>>>>> e578f7d79c7e1edf503be1e6390923e9e85c2218
 			}
-			if(pages!=1){
+			if(pages!=1&&pages!=0){
 				var next = parseInt(page) + 1;
 				var pre = parseInt(page) - 1;
 				if(page==1){
@@ -504,8 +500,8 @@ function searchMem(page){
                       <th class="text-center">Status</th>
                     </tr>
                   </thead>
-                  <!-- <tbody>
-                    <tr>
+                   <tbody id="memory">
+                   <!-- <tr>
                       <td class="">
                         <label class="option block mn">
                           <input type="checkbox" name="mobileos" value="FR">
@@ -829,9 +825,9 @@ function searchMem(page){
                           </ul>
                         </div>
                       </td>
-                    </tr>
+                    </tr> -->
                     
-                  </tbody> -->
+                  </tbody>
                 </table>
               </div>
             </div>
