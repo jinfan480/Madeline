@@ -100,10 +100,13 @@ public class MemoryAction implements ServletRequestAware {
 			memory.setPicture("memory/images/" + imageFileName.trim());
 		}
 		memory.setIsdeleted(false);
-		System.out.println("Action"+memory.getTitle());
-		System.out.println("Action"+memory.getContent());
-		System.out.println("Action"+memory.getUserid());
-		System.out.println(memory);
+		if(request.getParameter("userID")==null||request.getParameter("userID").isEmpty()){
+			memory.setIsapproved(null);
+		}else{
+			memory.setIsapproved(true);
+		}
+		String id = request.getParameter("userID");
+		memory.setUserid(Integer.parseInt(id));
 		
 		String result =  memoryService.addMemory(memory);
 		System.out.println(result);
@@ -162,13 +165,15 @@ public class MemoryAction implements ServletRequestAware {
 		ServletActionContext.getResponse().setCharacterEncoding("utf-8");
 		PrintWriter out = null;
 		String json = new String();
-		String id = request.getParameter("memoryId");
+		String id = request.getParameter("userID");
+		System.out.println("id="+id);
 		try {
 			out = ServletActionContext.getResponse().getWriter();
 			json = memoryService.memorySearch(id);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(json);
 		out.print(json);
 		out.flush();
 	}

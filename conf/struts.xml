@@ -10,9 +10,9 @@
 		
 		<action name="user*" class="userAction" method="user{1}">
 			<result name="login_as_admin">/Admin_DashBoard.html</result>
-			<result name="login_as_user">/User_Timeline.html</result>
+			<result name="login_as_user">/User_Timeline.jsp</result>
 			<result name="login_failed">/loginRegister.jsp</result>
-			<result name="resgister_succeeded">/User_Timeline.html</result>
+			<result name="resgister_succeeded">/User_Timeline.jsp</result>
 			<result name="username_exists">/loginRegister.jsp</result>
 			<result name="User Modified">/User_Settings.jsp</result>
 			<result name="Fail to Modify">/User_Settings.jsp</result>
