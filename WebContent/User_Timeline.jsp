@@ -57,10 +57,11 @@ function LoadLevel(message){
 // 			alert(json);
 			floor = eval(json);
 			for(var i=0; i<floor.length; i++){
-				Level += "<option value=\""+floor[i].floornum+"\">"+floor[i].floornum+"</option>";
+				Level += "<option value=\""+floor[i].floorid+"\">"+floor[i].floornum+"</option>";
 			}
 			document.getElementById("level").innerHTML = Level;
 			LoadRoom();
+			searchMem(1);
 		}
 	};
 	
@@ -86,7 +87,7 @@ function searchRoom(){
 // 			alert(json);
 			room = eval(json);
 			for(var i=0; i<room.length; i++){
-				Room += "<option value=\""+room[i].roomnum+"\">"+room[i].roomnum+":"+room[i].roomname+"</option>";
+				Room += "<option value=\""+room[i].roomid+"\">"+room[i].roomnum+":"+room[i].roomname+"</option>";
 			}
 			document.getElementById("room").innerHTML = Room;
 		}
@@ -138,6 +139,51 @@ function LoadRoom(){
 	xmlhttp.send(null);
 }
 
+function searchMem(page){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var Memory ="";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			var pages = json.split("||")[0];
+			mem = eval(json.split("||")[1]);
+			for(var i=0; i<mem.length; i++){
+				Memory += "<div class=\"entry\"><div class=\"media-left\">";
+				if(mem[i].picture!=null&&mem[i].picture!=""){
+					Memory += "<a href="+mem[i].picture+" class=\"entry-image popup-image\">\<img class=\"thumbnail\" src="+mem[i].picture+" alt=\"thumb\"><div class=\"dim\"></div><i class=\"icon icon-lg icon-magnifier\"></i></a>";
+				}
+				Memory += "</div><div class=\"media-body\">";
+				Memory += "<h3 class\"entry-titl\">"+mem[i].title+"</h3>";
+				Memory += "<p class=\"entry-desc\">"+mem[i].content+"</p></div></div>";
+			}
+			if(pages!=1&&pages!=0){
+				var next = parseInt(page) + 1;
+				var pre = parseInt(page) - 1;
+				if(page==1){
+					Memory += "<nav><a href=\"javascript:void(0)\"onclick=\"searchArt("+next+")\" class=\"btn btn-default right\">Next <span aria-hidden=\"true\">&rarr;</span></a></nav>";
+				}else if(page==pages){
+					Memory += "<nav><a href=\"javascript:void(0)\"onclick=\"searchArt("+pre+")\" class=\"btn btn-default\"><span aria-hidden=\"true\">&larr;</span> Previous</a></nav>";
+				}else{
+					Memory += "<nav><a href=\"javascript:void(0)\"onclick=\"searchArt("+pre+")\" class=\"btn btn-default\"><span aria-hidden=\"true\">&larr;</span> Previous</a><a href=\"javascript:void(0)\"onclick=\"searchArt("+next+")\" class=\"btn btn-default right\">Next <span aria-hidden=\"true\">&rarr;</span></a></nav>";
+				}
+			}
+			document.getElementById("memory").innerHTML = Memory;
+		}
+	};
+	xmlhttp.open("POST", "memoryView", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	var userID = '${session.user.userid}';
+	alert(userID);
+	xmlhttp.send("userID="+userID+"&page="+page+"&size=3");
+}
+
+
 </script>
 
 
@@ -147,10 +193,10 @@ function LoadRoom(){
   <!-- Start: Theme Preview Pane -->
   
   <!-- End: Theme Preview Pane -->
-
+             	<input type = "hidden" id="user.userid" name="user.userid">
   <!-- Start: Main -->
   <div id="main">
-
+	
     <!-- Start: Header -->
     <header class="navbar navbar-fixed-top navbar-shadow">
       <div class="navbar-branding">
@@ -557,11 +603,8 @@ function LoadRoom(){
                                   </div>
                                   <div class="col-md-4">
                                     <label for="name2" class="field prepend-icon">
-<<<<<<< HEAD:WebContent/User_Timeline.jsp
-                                      <!-- <input type="text" name="memory.title" id="memory.title" class="event-name gui-input" placeholder="Memory Title"> -->
-=======
-                                      <input type="text" name="name2" id="name2" class="event-name gui-input" placeholder="Tags">
->>>>>>> e578f7d79c7e1edf503be1e6390923e9e85c2218:WebContent/User_Timeline.html
+                           <input type="text" name="name2" id="name2" class="event-name gui-input" placeholder="Tags">
+
                                       <label for="name2" class="field-icon">
                                         <i class="fa fa-pencil"></i>
                                       </label>
@@ -618,11 +661,9 @@ function LoadRoom(){
 
                               <div class="col-md-6">
                                 <label for="date1" class="field prepend-icon">
-<<<<<<< HEAD:WebContent/User_Timeline.jsp
+
                                   <input type="text" name="memory.date" id="memory.date" class="datepicker gui-input" placeholder="Data">
-=======
-                                  <input type="text" name="date1" id="date1" class="datepicker gui-input" placeholder="Memory Data">
->>>>>>> e578f7d79c7e1edf503be1e6390923e9e85c2218:WebContent/User_Timeline.html
+
                                   <label for="date1" class="field-icon">
                                     <i class="fa fa-calendar"></i>
                                   </label>
@@ -741,7 +782,7 @@ function LoadRoom(){
                 </div>
               </div>
               
-              <div class="timeline-item">
+              <!-- <div class="timeline-item">
                 <div class="timeline-icon">
                   <span class="glyphicon glyphicon-user text-primary"></span>
                 </div>
@@ -791,11 +832,11 @@ function LoadRoom(){
                       </label>
                     </div>
                   </div>
-                  <!-- end .form-footer section -->
+                  end .form-footer section
 
                 </div>
-              </div>
-              <div class="timeline-item">
+              </div> -->
+              <!-- <div class="timeline-item">
                 <div class="timeline-icon">
                   <span class="glyphicon glyphicons-picture text-info"></span>
                 </div>
@@ -823,10 +864,10 @@ function LoadRoom(){
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <!-- Timeline - Right Column -->
-            <div class="col-sm-6 right-column">
+            <!-- <div class="col-sm-6 right-column">
               <div class="timeline-item">
                 <div class="timeline-icon">
                   <span class="fa fa-video-camera text-primary"></span>
@@ -839,7 +880,7 @@ function LoadRoom(){
                   </div>
                   <div class="panel-body">
                     <div class="embed-responsive embed-responsive-16by9">
-                      <!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tGlY7sXVYf0" frameborder="0" allowfullscreen></iframe> -->
+                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tGlY7sXVYf0" frameborder="0" allowfullscreen></iframe>
                     </div>
                   </div>
                 </div>
@@ -865,14 +906,14 @@ function LoadRoom(){
                 </div>
               </div>
             </div>
+ -->
+<!--           </div>
 
-          </div>
-
-          <!-- Timeline Divider -->
+          Timeline Divider
           <div class="timeline-divider">
             <div class="divider-label">2012</div>
           </div>
-
+ -->
         </div>
 </form>
         <!-- Timeline - Demo HTML -->
