@@ -30,7 +30,10 @@
 
 </head>
 <script type="text/javascript">
-function readUser(){
+function readUser(message){
+	if(message!=null&&message!=""){
+		alert(message);
+	}
 	var xmlhttp;
 	if (window.XMLHttpRequest) {
 		xmlhttp = new XMLHttpRequest();
@@ -44,6 +47,9 @@ function readUser(){
 // 			alert(json);
 			json = "[" + json + "]";
 			user = eval(json);
+			document.getElementById("user.userid").value = user[0].userid;
+			document.getElementById("user.username").value = user[0].username;
+			document.getElementById("user.userpassword").value = user[0].userpassword;
 			document.getElementById("user.username").value = user[0].username==undefined?"":user[0].username;
 			document.getElementById("user.email").value = user[0].email==undefined?"":user[0].email;
 			document.getElementById("user.phone").value = user[0].phone==undefined?"":user[0].phone;
@@ -64,7 +70,7 @@ function modify(){
 }
 </script>
 
-<body class="ecommerce-page" onLoad="readUser()">
+<body class="ecommerce-page" onLoad="readUser('${message}')">
 
   <!-- Start: Theme Preview Pane -->
   
@@ -314,7 +320,7 @@ function modify(){
               </li>
               
               <li class="active">
-                <a href="User_Settings.html">
+                <a href="User_Settings.jsp">
                   <span class="fa fa-gears"></span> Settings </a>
               </li>
             </ul>
@@ -427,7 +433,10 @@ function modify(){
               <div class="panel-heading">
                 <span class="panel-title">User Basic Information</span>
               </div>
-              <form action="userModify" method="post" autocomplete="on">
+              <form name="userModify" action="userModify" method="post" autocomplete="on">
+             	<input type = "hidden" id="user.userid" name="user.userid">
+             	<input type = "hidden" id="user.username" name="user.username">
+             	<input type = "hidden" id="user.userpassword" name="user.userpassword">
               <div class="panel-body bg-light dark">
                 <div class="admin-form">
                   <div class="section row mb10">
@@ -445,7 +454,7 @@ function modify(){
                     <label for="account-email" class="field-label col-md-3 text-center">Email:</label>
                     <div class="col-md-9">
                       <label for="account-email" class="field prepend-icon">
-                        <input type="email" name="user.email" id="user.email" required="true" class="gui-input" value="User@madeline.com">
+                        <input type="email" name="user.email" id="user.email" required="true" class="gui-input">
                         <label for="account-email" class="field-icon">
                           <i class="fa fa-envelope-o"></i>
                         </label>
@@ -456,7 +465,7 @@ function modify(){
                     <label for="account-phone" class="field-label col-md-3 text-center">Phone:</label>
                     <div class="col-md-9">
                       <label for="account-phone" class="field prepend-icon">
-                        <input type="text" name="user.phone" id="user.phone" class="gui-input" value="+61 041234567" placeholder="">
+                        <input type="text" name="user.phone" id="user.phone" class="gui-input" placeholder="">
                         <label for="account-phone" class="field-icon">
                           <i class="fa fa-phone"></i>
                         </label>
@@ -606,8 +615,8 @@ function modify(){
                 </div>
               </div>
 			</div>
-			</form>
 
+			</form>
             <!-- Request Google Analytics -->
            
         <!-- end: .tray-center -->

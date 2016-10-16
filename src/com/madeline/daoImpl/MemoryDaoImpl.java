@@ -176,7 +176,7 @@ public class MemoryDaoImpl implements MemoryDao {
 		Date d = new Date();
 		
 		System.out.println("MEMshow"+date);
-		if(!date.equals("null"))
+		if(!date.equals("null")&&!date.isEmpty())
 		{
 			String[] s = date.split("/");
 			String fDate = s[2]+"-"+s[0]+"-"+s[1]+" ";
@@ -190,10 +190,10 @@ public class MemoryDaoImpl implements MemoryDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			query.setDate(0, d);
 		}
 		
 		
-		query.setDate(0, d);
 		
 		long pages = (long)query.getSingleResult()/size + ((long)query.getSingleResult()%size==0?0:1);
 		return pages + "||" + gson.toJson(result);

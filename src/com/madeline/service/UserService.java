@@ -42,10 +42,14 @@ public class UserService {
 	}
 
 	public String userModify(User user) {
-		if(user==null){
+		if(user==null||user.getUserid()==null){
 			return "Null User";
 		}
-		if()
+		if(userDao.userModify(user)){
+			return "User Modified";
+		}else{
+			return "Fail to Modify";
+		}
 	}
 
 

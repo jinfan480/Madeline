@@ -18,9 +18,10 @@
 		<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
     </head>
     <script type="text/javascript">
-    function  Load(message){
+    function Load(message){
     	if(message!=null&&message!=""){
-    		alert(message);
+        	message = message.replace("|","\r\n");
+        	alert(message);
     	}
     }
     </script>
@@ -35,7 +36,7 @@
                     <a class="hiddenanchor" id="tologin"></a>
                     <div id="wrapper">
                         <div id="login" class="animate form">
-                            <form  action="Admin_DashBoard.html" action="User_Timeline.html" method="post" autocomplete="on"> 
+                            <form  action="userLogin"  method="post" autocomplete="on"> 
                                 <h1>Log in</h1> 
                                 <p> 
                                     <label for="username" class="uname"  > Your email or username </label>

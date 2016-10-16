@@ -59,7 +59,7 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	public String userLogin(){
 		User result = userService.userLogin(user);
 		if(result == null){
-			ActionContext.getContext().put("message", "Username does not Exist\r\nOr Password does not match");
+			ActionContext.getContext().put("message", "Username does not Exist|Or Password does not Match");
 			return "login_failed";
 		}
 		else{
@@ -95,6 +95,8 @@ public class UserAction extends ActionSupport implements ServletRequestAware{
 	}
 	
 	public String userModify(){
+		user.setRoleid(1);
+		user.setRolename("User");
 		user.setIssubscribed(false);
 		String result =  userService.userModify(user);
 		ActionContext.getContext().put("message",result);

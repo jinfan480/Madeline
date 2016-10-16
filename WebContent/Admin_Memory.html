@@ -62,7 +62,7 @@ function searchMem(page){
 				Memory += "<td><div class=\"btn-group text-right\">";
 				Memory +=	"<button type=\"button\" class=\"btn btn-success br2 btn-xs fs12 dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\"> Action";
 				Memory += "<span class=\"caret ml5\"></span></button>";
-				Memory += "<ul class=\"dropdown-menu\" role=\"menu\"><li><a href=\"#\" onclick=\"edit("+mem[i].memoryid+")\">Approve</a></li><li><a href=\"#\" onclick=\"Delete("+art[i].artefactid+")\">Discard</a></li><li><a href=\"#\">Checking</a></li></ul></div></td></tr>";
+				Memory += "<ul class=\"dropdown-menu\" role=\"menu\"><li><a href=\"#\" onclick=\"edit("+mem[i].memoryid+")\">Approve</a></li><li><a href=\"#\" onclick=\"Delete("+mem[i].memoryid+")\">Discard</a></li><li><a href=\"#\">Checking</a></li></ul></div></td></tr>";
 			}
 			if(pages!=1){
 				var next = parseInt(page) + 1;
@@ -78,7 +78,6 @@ function searchMem(page){
 			document.getElementById("memory").innerHTML = Memory;
 		}
 	};
-	alert(page);
 	xmlhttp.open("POST", "memorySearch", true);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("date="+date+"&isapproved="+status+"&page="+page+"&size="+size);
@@ -100,7 +99,7 @@ function searchMem(page){
    
      <header class="navbar navbar-fixed-top navbar-shadow">
       <div class="navbar-branding">
-        <a class="navbar-brand" href="dashboard.html">
+        <a class="navbar-brand" href="index.html">
           <b>Madeline</b>Admin
         </a>
         <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
@@ -266,7 +265,7 @@ function searchMem(page){
                 <span class="fa fa-gear"></span> Settings </a>
             </li>
             <li class="dropdown-footer">
-              <a href="#" class="">
+              <a href="loginRegister.html" class="">
               <span class="fa fa-power-off pr5"></span> Logout </a>
             </li>
           </ul>
@@ -292,7 +291,7 @@ function searchMem(page){
               </a>
               <div class="media-body">
                 <div class="media-links">
-                   <a href="#" class="sidebar-menu-toggle">User Menu -</a> <a href="pages_login(alt).html">Logout</a>
+                   <a href="#" class="sidebar-menu-toggle">User Menu -</a> <a href="loginRegister.html">Logout</a>
                 </div>
                 <div class="media-author">Michael Richards</div>
               </div>

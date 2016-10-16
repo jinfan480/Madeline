@@ -23,7 +23,74 @@
 	<link rel="stylesheet" type="text/css" href="cssRoom/swiper.min.css">
 	<link rel="stylesheet" type="text/css" href="mapplic/mapplic.css">
 </head>
-<body>
+<script type="text/javascript">
+
+function getParam(){
+	var url = document.location.href;
+	var type = "Old";
+	var id = "107";
+    if (url.indexOf("=")>0)
+    {
+    	id = url.substring(url.indexOf("=")+1,url.length);
+    }
+    if (url.indexOf("?")>0)
+    {
+    	type = url.substring(url.indexOf("?")+1,url.indexOf("?")+4);
+    }
+    if(type=="Old"){
+    	document.getElementById("para1").innerHTML="Old Artefacts";
+    	document.getElementById("para2").innerHTML="<a class=\"link-primary\" id=\"para2\" href=\"blog-small.html?New="+id+"\">New Artedfacts</a>";
+    }else{
+    	document.getElementById("para1").innerHTML="New Artefacts";
+    	document.getElementById("para2").innerHTML="<a class=\"link-primary\" id=\"para2\" href=\"blog-small.html?Old="+id+"\">Old Artedfacts</a>";
+    }
+   
+    searchArt(type,id,1);
+}
+
+function searchArt(type,id,page){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var Artefact ="";
+			var json = xmlhttp.responseText;
+// 			alert(json);
+			var pages = json.split("||")[0];
+			art = eval(json.split("||")[1]);
+			for(var i=0; i<art.length; i++){
+				Artefact += "<div class=\"entry\"><div class=\"media-left\">";
+				if(art[i].picture!=null&&art[i].picture!=""){
+					Artefact += "<a href="+art[i].picture+" class=\"entry-image popup-image\">\<img class=\"thumbnail\" src="+art[i].picture+" alt=\"thumb\"><div class=\"dim\"></div><i class=\"icon icon-lg icon-magnifier\"></i></a>";
+				}
+				Artefact += "</div><div class=\"media-body\">";
+				Artefact += "<h3 class\"entry-titl\">"+art[i].title+"</h3>";
+				Artefact += "<p class=\"entry-desc\">"+art[i].content+"</p></div></div>";
+			}
+			if(pages!=1&&pages!=0){
+				var next = parseInt(page) + 1;
+				var pre = parseInt(page) - 1;
+				if(page==1){
+					Artefact += "<nav><a href=\"javascript:void(0)\"onclick=\"searchArt('"+type+"',"+id+","+next+")\" class=\"btn btn-default right\">Next <span aria-hidden=\"true\">&rarr;</span></a></nav>";
+				}else if(page==pages){
+					Artefact += "<nav><a href=\"javascript:void(0)\"onclick=\"searchArt('"+type+"',"+id+","+pre+")\" class=\"btn btn-default\"><span aria-hidden=\"true\">&larr;</span> Previous</a></nav>";
+				}else{
+					Artefact += "<nav><a href=\"javascript:void(0)\"onclick=\"searchArt('"+type+"',"+id+","+pre+")\" class=\"btn btn-default\"><span aria-hidden=\"true\">&larr;</span> Previous</a><a href=\"javascript:void(0)\"onclick=\"searchArt('"+type+"',"+id+","+next+")\" class=\"btn btn-default right\">Next <span aria-hidden=\"true\">&rarr;</span></a></nav>";
+				}
+			}
+			document.getElementById("artefact").innerHTML = Artefact;
+		}
+	};
+	xmlhttp.open("POST", "artefactSearch", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("room="+id+"&isOld="+type+"&page="+page+"&size=3");
+}
+</script>
+<body onLoad="getParam()">
 <div id="wrap">
 	<!-- Header -->
 	<header id="header">
@@ -82,7 +149,7 @@
 		<!-- Title -->
 		<section class="title sec-sm">
 			<div class="inner">
-				<h5><i class="icon icon-note"></i> Old Artefacts</h5>
+				<h5><i class="icon icon-note" id="para1"></i></h5>
 				<h1><strong>Picture</strong> &amp; Description</h1>
 			</div>
 		</section>
@@ -91,81 +158,18 @@
 			<div class="inner container-fluid">
 				<div class="row">
 					<!-- Posts -->
-					<div class="col-md-8 entry-list margin-xs">
-
-						<!-- Post Example 1 -->
+					<div class="col-md-8 entry-list margin-xs" id="artefact">
 						<div class="entry">
 							<div class="media-left">
-								<a href="imgRoom/01.jpg" class="entry-image popup-image">
-									<img class="thumbnail" src="imgRoom/01.jpg" alt="thumb">
-									<div class="dim"></div>
+								<a href="artefact/images/0684510aa8d3fd1f42bfa1af304e251f94ca5f90.gif" class="entry-image popup-image">
+									<img class="thumbnail" src="artefact/images/0684510aa8d3fd1f42bfa1af304e251f94ca5f90.gif" alt="thumb">
+<!-- 									<div class="dim"></div> -->
 									<i class="icon icon-lg icon-magnifier"></i>
 								</a>
 							</div>
-							<div class="media-body">
-								<small class="entry-category"><a href="#">Books</a></small>
-								<h3 class="entry-title"><a href="#">View the old pages!</a></h3>
-								<div class="entry-meta">
-									<small><a href="#">Upload: June 15, 2016</a></small>
-									
-									
-								</div>
-								<p class="entry-desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat.</p>
-							</div>
 						</div>
 
-						<!-- Post Example 2 -->
-						<div class="entry">
-							<div class="media-left">
-								<a href="imgRoom/02.jpg" class="entry-image popup-image">
-									<img class="thumbnail" src="imgRoom/02.jpg" alt="thumb">
-									<div class="dim"></div>
-									<i class="icon icon-lg icon-magnifier"></i>
-								</a>
-							</div>
-							<div class="media-body">
-								<small class="entry-category"><a href="#">Pens</a></small>
-								<h3 class="entry-title"><a href="#">An old pen from a doctor!</a></h3>
-								<div class="entry-meta">
-									<small><a href="#">Upload: May 22, 2016</a></small>
-									
-								</div>
-								<p class="entry-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-								consequat.</p>
-							</div>
-						</div>
-
-						<!-- Post Example 3 -->
-						<div class="entry">
-							<div class="media-left">
-								<a href="imgRoom/03.jpg" class="entry-image popup-image">
-									<img class="thumbnail" src="imgRoom/03.jpg" alt="thumb">
-									<div class="dim"></div>
-									<i class="icon icon-lg icon-magnifier"></i>
-								</a>
-							</div>
-							<div class="media-body">
-								<small class="entry-category"><a href="#">Books</a></small>
-								<h3 class="entry-title"><a href="#">Old books but immortal knowledge</a></h3>
-								<div class="entry-meta">
-									<small><a href="#">Upload: March 4, 2016</a></small>
-									
-								</div>
-								<p class="entry-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation voluptate velit esse cillum dolore aliquip ex ea commodo consequat.</p>
-							</div>
-						</div>
-
-						<!-- Post Example 4 -->
-						
-
-						<!-- Post Example 5 -->
-						
-
-						<!-- Pagination -->
+					
 						<nav>
 							<a href="#" class="btn btn-default"><span aria-hidden="true">&larr;</span> Previous</a>
 							<a href="blog-small next.html" class="btn btn-default right">Next <span aria-hidden="true">&rarr;</span></a>
@@ -180,25 +184,22 @@
 							<h3>More in the Room</h3>
 							<div class="entry-sm media">
 								<div class="media-left">
-									<img class="post-thumbnail" src="imgRoom/newA.jpg" alt="thumb">
+<!-- 									<img class="post-thumbnail" src="imgRoom/newA.jpg" alt="thumb"> -->
 								</div>
-								<div class="media-body">
-									<a class="link-primary" href="#">New Artefacts</a>
-									<div class="entry-meta">
-										<small><a href="location.html">Infirmary Department</a></small>
-										<small><a href="#">Last Updated: May 21, 2016</a></small>
-									</div>
+								<div class="media-body" id="para2">
+<!-- 									<a class="link-primary" id="para2" href="blog-small.html?New"></a> -->
+									
 								</div>
 							</div>
 							<div class="entry-sm media">
 								<div class="media-left">
-									<img class="post-thumbnail" src="imgRoom/mem.jpg" alt="thumb">
+<!-- 									<img class="post-thumbnail" src="imgRoom/mem.jpg" alt="thumb"> -->
 								</div>
 								<div class="media-body">
 									<a class="link-primary" href="blog-nosidebar.html">Memories</a><br>
 									<div class="entry-meta">
-										<small><a href="location.html">Infirmary Department</small>
-										<small><a href="#">Last Updated: March 24, 2016</a></small>
+<!-- 										<small><a href="location.html">Infirmary Department</small> -->
+<!-- 										<small><a href="#">Last Updated: March 24, 2016</a></small> -->
 									</div>
 								</div>
 							</div>
@@ -209,16 +210,16 @@
 						
 
 						<!-- Categories Widget -->
-						<div class="widget">
-							<h3>Categories</h3>
-							<ul class="list-unstyled link-list link-primary no-margin">
-								<li><a href="#">Books</a></li>
-								<li><a href="#">Medical Tools</a></li>
-								<li><a href="#">Pens</a></li>
-								<li><a href="#">Photos</a></li>
-								<li><a href="#">Others</a></li>
-							</ul>
-						</div>
+<!-- 						<div class="widget"> -->
+<!-- 							<h3>Categories</h3> -->
+<!-- 							<ul class="list-unstyled link-list link-primary no-margin"> -->
+<!-- 								<li><a href="#">Books</a></li> -->
+<!-- 								<li><a href="#">Medical Tools</a></li> -->
+<!-- 								<li><a href="#">Pens</a></li> -->
+<!-- 								<li><a href="#">Photos</a></li> -->
+<!-- 								<li><a href="#">Others</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</div> -->
 					</div>
 				</div>
 			</div>

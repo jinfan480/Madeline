@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.madeline.dao.UserDao;
+import com.madeline.entity.RelationRoomArtefact;
 import com.madeline.entity.User;
 
 @Repository @Transactional
@@ -68,6 +69,19 @@ public class UserDaoImpl implements UserDao {
 		}
 		Gson gson = new Gson();
 		return gson.toJson(user);
+	}
+
+	@Override
+	public boolean userModify(User user) {
+		Session session = sessionFactory.getCurrentSession();
+		try{
+			session.update(user);
+		// TODO
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }
